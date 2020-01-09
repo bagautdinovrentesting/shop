@@ -1,1 +1,1 @@
-console.log('hello worldasdsssad');
+require('./bootstrap');
