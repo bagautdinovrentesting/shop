@@ -12,9 +12,11 @@
 */
 
 Route::get('/', function () {
-    $user = Auth::user();
-
-    return view('welcome', ['user' => $user]);
+    return view('welcome');
 });
 
 Auth::routes();
+
+Route::prefix('admin')->middleware('auth')->group(function(){
+    Route::get('/', 'Admin\IndexController@index');
+});

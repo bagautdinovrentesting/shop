@@ -53,7 +53,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if ($user->type === 'admin')
+                                    @if (Auth::user()->type === 'admin')
                                         <a class="dropdown-item" href="/admin/">Админка</a>
                                     @endif
 
