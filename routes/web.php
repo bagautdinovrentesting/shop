@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+    //request()->session()->forget('status');
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::prefix('admin')->middleware('auth')->group(function(){
+Route::prefix('admin')->middleware('check.type')->group(function(){
     Route::get('/', 'Admin\IndexController@index');
+
+    Route::get('update_product', function(){
+        return 'hello world';
+    });
 });

@@ -7,13 +7,9 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $user = \Auth::user();
-
-        if ($user->type !== 'admin')
-            return redirect('/');
-
-        return view('admin.index');
+        return redirect('/')->with('status', 'gotsssw it');
+        //return view('admin.index');
     }
 }
