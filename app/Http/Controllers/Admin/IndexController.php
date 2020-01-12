@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        return redirect('/')->with('status', 'gotsssw it');
-        //return view('admin.index');
+        //return redirect('/')->with('status', 'gotsssw it');
+        return view('admin.index');
     }
 }

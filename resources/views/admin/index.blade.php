@@ -1,5 +1,5 @@
 @extends('admin.template')
 
 @section('content')
-Админка
+{{ $author }}
 @endsection
