@@ -1,5 +1,7 @@
 @extends('admin.template')
 
 @section('content')
-{{ $author }}
+    @foreach($users as $user)
+        {{ $user->name }}<br>
+    @endforeach
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Главная'])
+@extends('layouts.app', ['title' => trans('messages.main_title')])
 
 @section('content')
     <div class="container">
