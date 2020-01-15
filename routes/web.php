@@ -24,4 +24,8 @@ Route::prefix('admin')->middleware('check.type')->group(function(){
     Route::get('update_product', function(){
         return 'hello world';
     });
+
+    Route::post('add_product', 'Admin\IndexController@store');
+
+    Route::delete('delete_product/{product}', 'Admin\IndexController@remove');
 });
