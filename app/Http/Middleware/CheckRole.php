@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckType
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class CheckType
     {
         $user = $request->user();
 
-        if (($user === null) || ($user->type !== 'admin'))
+        if (($user === null) || ($user->role !== 'admin'))
             return redirect('/');
 
         return $next($request);

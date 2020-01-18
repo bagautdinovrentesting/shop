@@ -18,7 +18,7 @@ Route::get('/', function (Request $request) {
 
 Auth::routes();
 
-Route::prefix('admin')->middleware('check.type')->group(function(){
+Route::prefix('admin')->middleware('check.role')->group(function(){
     Route::get('/', 'Admin\IndexController@index');
 
     Route::get('update_product', function(){

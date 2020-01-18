@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Product;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
@@ -14,7 +14,7 @@ class IndexController extends Controller
         $users = User::select('*')->get();
 
         $users = $users->reject(function ($user) {
-            return $user->type !== 'admin';
+            return $user->role === 'admin';
         });
 
         return view('admin.index', ['users' => $users]);
