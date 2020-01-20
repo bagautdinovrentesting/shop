@@ -11,21 +11,27 @@
 |
 */
 
-Route::get('/', function (Request $request) {
-    //request()->session()->forget('status');
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::prefix('admin')->middleware('check.role')->group(function(){
-    Route::get('/', 'Admin\IndexController@index');
+Route::prefix('admin')->middleware('check.role')->group(function() {
+    Route::namespace('Admin')->group(function() {
+        Route::get('/', 'HomeController@index');
 
-    Route::get('update_product', function(){
-        return 'hello world';
+        /*Route::get('update_product', function(){
+            return 'hello world';
+        });
+
+        Route::post('add_product', 'Admin\IndexController@store');
+
+        Route::delete('delete_product/{product}', 'Admin\IndexController@remove');*/
     });
+});
 
-    Route::post('add_product', 'Admin\IndexController@store');
+Route::namespace('Front')->group(function() {
+    Route::get('/', 'HomeController@index');
 
-    Route::delete('delete_product/{product}', 'Admin\IndexController@remove');
+    Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
+    Route::get("{product}", 'ProductController@show')->name('front.product.id');
+
+    //Route::get("{product}", 'CartController@show')->name('front.product.id');
 });

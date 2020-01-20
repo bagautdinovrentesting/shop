@@ -7,7 +7,7 @@ use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class HomeController extends Controller
 {
     public function index(Request $request)
     {

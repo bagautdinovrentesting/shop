@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
         User::create([
             'name' => 'Bourne',
             'email' => 'superbourne@mail.ru',
-            'password' => 'laravelknopka',
+            'password' => bcrypt('laravelknopka'),
             'role' => 'admin'
         ]);
     }
