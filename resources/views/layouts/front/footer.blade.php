@@ -1,6 +1,6 @@
 <footer class="mt-auto">
     <div class="container">
-        <div class="row d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <div class="copyright">
                 <p>&copy; <a href="{{ config('app.url') }}" class="text-muted">{{ config('app.name') }}</a></p>
             </div>

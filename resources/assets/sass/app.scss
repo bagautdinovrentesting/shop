@@ -7,6 +7,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+/* HEADER */
+
 .catalog-menu{
   background-color: $catalogBackground;
 
@@ -21,6 +23,8 @@
     }
   }
 }
+
+/* MAIN PAGE */
 
 .main-banner{
   background-color: $mainBannerBackground;
@@ -40,6 +44,24 @@
     border: solid 1px #4e555b;
   }
 }
+
+/* SECTION */
+
+.section-items__item{
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+
+  .item__body{
+    padding: 10px;
+
+    .item__body-title{
+      height: 40px;
+    }
+  }
+}
+
+/* FOOTER */
 
 footer{
   background-color: $footerBackground;

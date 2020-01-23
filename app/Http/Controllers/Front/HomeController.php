@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $randomProducts = Product::all()->random(1);
+        $randomProducts = Product::all()->random(4);
 
         return view('front.main', ['products' => $randomProducts]);
     }
