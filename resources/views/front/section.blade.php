@@ -1,7 +1,7 @@
 @extends('layouts.front.app', ['title' => $section->name])
 
 @section('content')
-    <div class="container">
+    <div class="container py-4">
         <div class="section-descr">
             {{ $section->description }}
         </div>

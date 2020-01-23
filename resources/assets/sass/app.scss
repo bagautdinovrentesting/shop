@@ -1,5 +1,48 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+// Variables
+@import "variables";
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.catalog-menu{
+  background-color: $catalogBackground;
+
+  nav{
+    .nav-link{
+      color: $catalogTextColor;
+    }
+
+    .nav-link.active{
+      background-color: transparent;
+      color: $catalogTextColorActive;
+    }
+  }
+}
+
+.main-banner{
+  background-color: $mainBannerBackground;
+  padding: 40px 20px;
+}
+
+.random-products{
+  padding: 20px 0;
+
+  .random-products__header{
+    h3{
+      text-align: center;
+    }
+  }
+
+  .random-products--item{
+    border: solid 1px #4e555b;
+  }
+}
+
+footer{
+  background-color: $footerBackground;
+  min-height: 150px;
+  padding: 20px 0;
+}
