@@ -61,6 +61,25 @@
   }
 }
 
+/* PRODUCT */
+
+.product-detail__buy{
+  border: 4px #563d7c solid;
+  border-radius: 3px;
+
+  .product-detail__buy-action .btn{
+    background-color: #563d7c;
+    border: none;
+  }
+  .product-detail__buy-action .btn:not(:disabled):not(.disabled):focus{
+    box-shadow: 0 0 0 3px rgba(121,82,179,.25);
+  }
+
+  .product-detail__buy-action .btn:active{
+    background-color: #563d7c;
+  }
+}
+
 /* FOOTER */
 
 footer{

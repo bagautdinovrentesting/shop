@@ -22,7 +22,11 @@
 <body class="d-flex flex-column h-100">
     @include('layouts.front.header')
 
-    <main>
+    @if( isset($showBanner) )
+        @include('components.banner')
+    @endif
+
+    <main class="container py-4">
         @yield('content')
     </main>
 

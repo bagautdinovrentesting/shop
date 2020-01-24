@@ -12,6 +12,6 @@ class HomeController extends Controller
     {
         $randomProducts = Product::all()->random(4);
 
-        return view('front.main', ['products' => $randomProducts]);
+        return view('front.main', ['products' => $randomProducts, 'showBanner' => true]);
     }
 }
