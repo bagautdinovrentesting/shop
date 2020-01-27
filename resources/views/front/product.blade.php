@@ -6,7 +6,7 @@
         <div class="product-main mt-4">
             <div class="row">
                 <div class="col-md-7">
-                    <img src="{{ asset('img/product_detail.jpg') }}" alt="{{ $product->name }}" class="img-fluid">
+                    <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
                 </div>
                 <div class="col-md-5 mt-3">
                     <div class="product-detail__buy p-4 text-center">
@@ -15,7 +15,12 @@
                             <span class="detail-price">{{ $product->price }}</span>
                         </div>
                         <div class="product-detail__buy-action mt-3">
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Купить</button>
+                            <form action="{{ route('cart.store') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product" value="{{ $product->id }}">
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Купить</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

@@ -31,8 +31,10 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if (Auth::user()->role === 'admin')
-                                    <a class="dropdown-item" href="/admin/">Админка</a>
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}">Админка</a>
                                 @endif
+
+                                    <a class="dropdown-item" href="{{ route('cart.index') }}">Корзина</a>
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();

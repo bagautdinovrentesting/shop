@@ -2,21 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Gloudemans\Shoppingcart\Cart as ShoppingCart;
 
-class Cart extends Model
+class Cart extends ShoppingCart
 {
-    protected $fillable = [
-        'total', 'user_id'
-    ];
 
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
-    public function products()
-    {
-        return $this->belongsToMany('App\Product');
-    }
 }

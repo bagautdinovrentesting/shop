@@ -27,9 +27,9 @@ Route::prefix('admin')->middleware('check.role')->group(function() {
 Route::namespace('Front')->group(function() {
     Route::get('/', 'HomeController@index')->name('home');
 
+    Route::resource("cart", 'CartController');
+
     Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
     Route::get("{product}", 'ProductController@show')->name('front.product.id');
-
-    //Route::resource("cart", 'CartController@show');
     //Route::get("checkout", 'CheckoutController@show');
 });
