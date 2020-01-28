@@ -11,9 +11,16 @@
                     <a href="{{ route('front.product.id', $product->id) }}">{{ $product->name }}</a>
                 </div>
                 <div class="item__body-checkout d-flex justify-content-between align-items-center">
-                    <div class="item__price font-weight-bold">{{ intval($product->price) }} руб.</div>
+                    <div class="item__price font-weight-bold">
+                        {{ number_format($product->price, 0, '.', ' ') }}
+                        <span class="ruble-currency"><i class="fa fa-ruble-sign" aria-hidden="true"></i></span>
+                    </div>
                     <div class="item__buy">
-                        <button class="btn btn-primary" type="submit">Купить</button>
+                        <form action="{{ route('cart.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product" value="{{ $product->id }}">
+                            <button class="btn btn-primary" type="submit">Купить</button>
+                        </form>
                     </div>
                 </div>
             </div>

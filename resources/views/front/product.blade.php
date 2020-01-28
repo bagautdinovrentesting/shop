@@ -12,7 +12,10 @@
                     <div class="product-detail__buy p-4 text-center">
                         <div class="product-detail__buy-price-block font-weight-bold">
                             <span>@lang('product.price')</span>
-                            <span class="detail-price">{{ $product->price }}</span>
+                            <span class="detail-price">
+                                {{ number_format($product->price, 0, '.', ' ') }}
+                                <span class="ruble-currency"><i class="fa fa-ruble-sign" aria-hidden="true"></i></span>
+                            </span>
                         </div>
                         <div class="product-detail__buy-action mt-3">
                             <form action="{{ route('cart.store') }}" method="post">
@@ -20,7 +23,6 @@
                                 <input type="hidden" name="product" value="{{ $product->id }}">
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Купить</button>
                             </form>
-
                         </div>
                     </div>
                 </div>

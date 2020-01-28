@@ -35,8 +35,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::findOneOrFail($request->input('product'));
-
+        $product = Product::findOrFail($request->input('product'));
         $this->cart->add($product, 1, []);
 
         return redirect()->route('cart.index');
@@ -62,6 +61,9 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cart->remove($id);
+        request()->session()->flash('success', __('cart.destroy_product_message'));
+
+        return redirect()->route('cart.index');
     }
 }
