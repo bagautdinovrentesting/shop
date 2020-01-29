@@ -21,7 +21,7 @@
                             <form action="{{ route('cart.store') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="product" value="{{ $product->id }}">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Купить</button>
+                                <button class="btn btn-main-theme btn-lg btn-block" type="submit">Купить</button>
                             </form>
                         </div>
                     </div>

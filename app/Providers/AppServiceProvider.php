@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Section;
+use App\Cart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer(['layouts.front.app'], function ($view) {
             $view->with('sections', Section::all());
+            $view->with('cartCounts', $this->getCartCounts());
         });
+    }
+
+    public function getCartCounts()
+    {
+        $cart = new Cart();
+
+        return $cart->count();
     }
 }

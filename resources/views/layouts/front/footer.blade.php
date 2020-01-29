@@ -1,15 +1,10 @@
-<footer class="mt-auto">
+<footer class="mt-auto text-muted">
     <div class="container">
-        <div class="d-flex justify-content-between">
-            <div class="copyright">
-                <p>&copy; <a href="{{ config('app.url') }}" class="text-muted">{{ config('app.name') }}</a></p>
-            </div>
-            <div class="footer-menu text-right">
-                <ul class="list-unstyled">
-                    <li> <a href="" class="text-muted">Contact us</a>  </li>
-                    <li> <a href="" class="text-muted">Terms of service</a>  </li>
-                </ul>
-            </div>
+        <div class="footer-menu">
+            <ul class="list-unstyled footer-menu__links">
+                <li> <a href="">Contact us</a>  </li>
+                <li> <a href="">Terms of service</a>  </li>
+            </ul>
         </div>
     </div>
 </footer>

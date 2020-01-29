@@ -48,6 +48,9 @@
                 </tr>
             </tbody>
         </table>
+        <a href="{{ route('checkout.index') }}">
+            <button type="button" class="btn btn-main-theme float-right mt-2">Оформить заказ</button>
+        </a>
     @else
         <div class="alert alert-warning" role="alert">
             @lang('cart.empty')

@@ -6,13 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto mr-3">
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
@@ -49,6 +43,10 @@
                         </li>
                     @endguest
                 </ul>
+                <a href="{{ route('cart.index') }}" class="cart-count">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count__number">{{ $cartCounts }}</span>
+                </a>
             </div>
         </div>
     </nav>
