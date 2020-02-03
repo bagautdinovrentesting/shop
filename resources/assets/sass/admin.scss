@@ -1,0 +1,42 @@
+@import "variables";
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+/* GLOBAL */
+
+@media (min-width: 768px) {
+    [role="main"] {
+        padding-top: 56px;
+    }
+}
+
+/* HEADER */
+
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 56px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+
+    .sidebar-sticky{
+        position: sticky;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: .5rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+

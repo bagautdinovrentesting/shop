@@ -13,16 +13,14 @@
 
 Auth::routes();
 
-Route::prefix('admin')->middleware('check.role')->group(function() {
+Route::prefix('admin')->middleware('check.role')->as('admin.')->group(function() {
     Route::namespace('Admin')->group(function() {
-        //Route::get('/', 'HomeController@index')->name('admin.home');
-        Route::get('/', function(){
-            return 'hello world';
-        });
-        //Route::resource('products', 'ProductController');
+        Route::get('/', 'HomeController@index')->name('dashboard');
+
+        Route::resource('products', 'ProductController');
         //Route::resource('sections', 'ProductController');
-        //Route::resource('users', 'ProductController');
-        //Route::resource('orders', 'ProductController');
+        Route::resource('users', 'UserController');
+        Route::get('orders', 'OrderController@index')->name('orders.index');
     });
 });
 
