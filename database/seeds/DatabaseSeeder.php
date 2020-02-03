@@ -16,18 +16,6 @@ class DatabaseSeeder extends Seeder
             \UsersSeeder::class,
             \SectionsSeeder::class,
             \ProductsSeeder::class,
-            \OrdersSeeder::class,
-            \CartsSeeder::class,
-        ]);
-
-        DB::table('order_product')->insert([
-            'order_id' => 1,
-            'product_id' => 1,
-        ]);
-
-        DB::table('cart_product')->insert([
-            'cart_id' => 1,
-            'product_id' => 1,
         ]);
     }
 }

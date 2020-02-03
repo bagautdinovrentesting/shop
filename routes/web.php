@@ -15,8 +15,10 @@ Auth::routes();
 
 Route::prefix('admin')->middleware('check.role')->group(function() {
     Route::namespace('Admin')->group(function() {
-        Route::get('/', 'HomeController@index')->name('admin.home');
-
+        //Route::get('/', 'HomeController@index')->name('admin.home');
+        Route::get('/', function(){
+            return 'hello world';
+        });
         //Route::resource('products', 'ProductController');
         //Route::resource('sections', 'ProductController');
         //Route::resource('users', 'ProductController');
