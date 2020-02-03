@@ -10,11 +10,11 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">@lang('front.login')</a>
+                            <a class="nav-link" href="{{ route('login') }}">@lang('login.login')</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">@lang('front.register')</a>
+                                <a class="nav-link" href="{{ route('register') }}">@lang('login.register')</a>
                             </li>
                         @endif
                     @else
@@ -25,15 +25,13 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if (Auth::user()->role === 'admin')
-                                    <a class="dropdown-item" href="{{ route('admin.home') }}">Админка</a>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Админка</a>
                                 @endif
 
-                                    <a class="dropdown-item" href="{{ route('cart.index') }}">Корзина</a>
-
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
+                                   onclick="e.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    @lang('login.logout')
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

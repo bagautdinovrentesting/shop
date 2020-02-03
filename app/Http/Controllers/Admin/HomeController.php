@@ -17,7 +17,7 @@ class HomeController extends Controller
             return $user->role === 'admin';
         });
 
-        return view('admin.index', ['users' => $users]);
+        return view('admin.dashboard', ['users' => $users]);
     }
 
     public function store(Request $request)

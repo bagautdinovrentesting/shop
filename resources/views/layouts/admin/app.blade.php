@@ -9,21 +9,28 @@
 
     <title>{{ $title ?? 'Админка'}}</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/admin/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ mix('css/admin/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app">
-    <main class="py-4">
-        @yield('content')
-    </main>
-</div>
+    @include('layouts.admin.header')
+
+    <div class="container-fluid">
+        <div class="row">
+            @include('layouts.admin.sidebar')
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                @yield('content')
+            </main>
+        </div>
+    </div>
+
+    @include('layouts.admin.footer')
+
+    <script src="{{ mix('js/admin.js') }}"></script>
 </body>
 </html>
