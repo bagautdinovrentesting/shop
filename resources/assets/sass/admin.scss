@@ -10,9 +10,17 @@
     }
 }
 
-.items-list td{
-    vertical-align: baseline;
+.items-list{
+    td{
+        vertical-align: baseline;
+    }
+
+    td.product-img img{
+        max-width: 70px;
+        max-heigth: 70px;
+    }
 }
+
 
 .status-ok{
     color: #11822f;
@@ -25,6 +33,7 @@
 .v-top{
     vertical-align: top;
 }
+
 
 /* HEADER */
 
