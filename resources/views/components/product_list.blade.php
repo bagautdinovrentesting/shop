@@ -3,7 +3,11 @@
         <div class="section-items__item">
             <div class="item__image text-center">
                 <a href="{{ route('front.product.id', $product->id) }}">
-                    <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}">
+                    @if (!empty($product->preview_photo))
+                        <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                    @else
+                        <img src="https://placehold.it/263x300" alt="{{ $product->name }}" class="img-fluid">
+                    @endif
                 </a>
             </div>
             <div class="item__body">

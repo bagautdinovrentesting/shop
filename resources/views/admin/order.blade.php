@@ -7,7 +7,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm items-list">
             <thead>
             <tr>
                 <th>#</th>
