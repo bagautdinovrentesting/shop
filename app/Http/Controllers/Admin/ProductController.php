@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Section;
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -17,7 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::with('section')->get();
 
-        return view('admin.product', ['products' => $products]);
+        return view('admin.products.list', ['products' => $products]);
     }
 
     /**
@@ -60,7 +61,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::with('section')->findOrFail($id);
+
+        $sections = Section::all();
+
+        return view('admin.products.edit', ['product' => $product, 'sections' => $sections]);
     }
 
     /**

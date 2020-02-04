@@ -25,7 +25,7 @@
             <tbody>
                 @foreach($products as $product)
                     <tr>
-                        <td>
+                        <td class="product-img">
                             @if (!empty($product->detail_photo))
                                 <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
                             @else

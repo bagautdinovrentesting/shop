@@ -3,7 +3,7 @@
 return [
     'dashboard' => 'Главная',
     'search' => 'Поиск',
-    'products' => 'Продукты',
+    'products' => 'Товары',
     'orders' => 'Заказы',
     'users' => 'Пользователи',
     'form_submit' => 'Отправить',
