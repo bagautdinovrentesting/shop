@@ -6,7 +6,11 @@
         <div class="product-main mt-4">
             <div class="row">
                 <div class="col-md-7">
-                    <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                    @if (!empty($product->detail_photo))
+                        <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                    @else
+                        <img src="https://placehold.it/665x330" alt="{{ $product->name }}" class="img-fluid">
+                    @endif
                 </div>
                 <div class="col-md-5 mt-3">
                     <div class="product-detail__buy p-4 text-center">

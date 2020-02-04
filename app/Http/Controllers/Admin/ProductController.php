@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('section')->get();
 
         return view('admin.product', ['products' => $products]);
     }
@@ -83,6 +83,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+        request()->session()->flash('success', 'Товар успешно удален!');
+
+        return redirect()->route('admin.products.index');
     }
 }

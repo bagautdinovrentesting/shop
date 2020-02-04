@@ -10,6 +10,22 @@
     }
 }
 
+.items-list td{
+    vertical-align: baseline;
+}
+
+.status-ok{
+    color: #11822f;
+}
+
+.status-not{
+    color: #a61e4d;
+}
+
+.v-top{
+    vertical-align: top;
+}
+
 /* HEADER */
 
 .form-control-dark {
