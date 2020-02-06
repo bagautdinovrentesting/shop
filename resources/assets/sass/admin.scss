@@ -34,6 +34,14 @@
     vertical-align: top;
 }
 
+.btn-custom{
+    padding: 8px 16px;
+    color: #fff;
+}
+
+.btn-back{
+    background-color: #777;
+}
 
 /* HEADER */
 
@@ -61,6 +69,50 @@
         padding-top: .5rem;
         overflow-x: hidden;
         overflow-y: auto;
+    }
+}
+
+/* Edit products */
+
+.img-container{
+    border: 2px dashed #d3d2d2;
+    position: relative;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 0;
+    min-height: 255px;
+    overflow: hidden;
+    max-width: 224px;
+
+    input[type=file]{
+        top: 35px;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 42px;
+        cursor: pointer;
+    }
+
+    .img-edit-panel{
+        height: 20px;
+        margin: 5px 0;
+        font-size: 20px;
+    }
+
+    .img-del{
+        cursor: pointer;
+    }
+
+    .img-list-descr{
+        font-size: 14px;
+        font-weight: bold;
+        color: #aebac3;
+        text-align: center;
+        position: relative;
+        display: block;
+        margin-top: 25px;
     }
 }
 

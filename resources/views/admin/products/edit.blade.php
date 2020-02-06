@@ -5,7 +5,7 @@
         <h1 class="h2">Изменить товар</h1>
     </div>
     @include('layouts.errors')
-    <form action="{{ route('admin.products.update', $product->id) }}" method="post" class="form needs-validation" enctype="multipart/form-data">
+    <form action="{{ route('admin.products.update', $product->id) }}" method="post" class="form needs-validation mb-4" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -27,13 +27,17 @@
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
 
-        <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" id="customControlValidation1" @if($product->status) checked @endif>
-            <label class="custom-control-label" for="customControlValidation1">Активный</label>
-            <div class="invalid-feedback">Example invalid feedback text</div>
+        <div class="form-group">
+            <label>Статус</label>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input form-control" id="customControlValidation1" @if($product->status) checked @endif>
+                <label class="custom-control-label" for="customControlValidation1">Активный</label>
+                <div class="invalid-feedback">Example invalid feedback text</div>
+            </div>
         </div>
 
         <div class="form-group">
+            <label>Раздел</label>
             <select class="custom-select" required>
                 @foreach($sections as $section)
                     <option value="{{ $section->id }}">{{ $section->name }}</option>
@@ -43,42 +47,49 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-3">
-                <div class="row">
-                    <img src="{{ Storage::url($product->detail_photo) }}" alt="" class="img-responsive img-thumbnail">
-                </div>
+            <label>Детальное изображение</label>
+            <div class="img-container my-2">
+                @if (!empty($product->detail_photo))
+                    <span class="img-list-descr">(Drag&amp;Drop) <br> Перетащите картинку</span>
+                    <input type="file" name="file" class="img-field">
+                @else
+                    <div class="img-block">
+                        <img src="https://placehold.it/200x200">
+                    </div>
+                    <div class="img-edit-panel text-center">
+                        <span class="img-del"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                @endif
             </div>
         </div>
+
         <div class="form-group">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                <label class="custom-file-label" for="validatedCustomFile">Детальное изображение</label>
-                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            <label>Изображение для анонса</label>
+            <div class="img-container my-2">
+                @if (!empty($product->preview_photo))
+                    <div class="img-block">
+                        <img src="{{ Storage::url($product->preview_photo) }}">
+                    </div>
+                    <div class="img-edit-panel text-center">
+                        <span class="img-del"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                @else
+                    <span class="img-list-descr">(Drag&amp;Drop) <br> Перетащите картинку</span>
+                    <input type="file" name="file" class="img-field">
+                @endif
             </div>
         </div>
-
-
-        <div class="form-group">
-            <div class="col-md-3">
-                <div class="row">
-                    <img src="{{ Storage::url($product->preview_photo) }}" alt="" class="img-responsive img-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Превью изображение</label>
-            <div class="invalid-feedback">Example invalid custom file feedback</div>
-        </div>
-
-        <div class="row">
-            <div class="box-footer">
-                <div class="btn-group">
-                    <a href="{{ route('admin.products.index') }}" class="btn btn-default btn-sm">Back</a>
-                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                </div>
+        <div class="box-footer">
+            <div class="btn-group">
+                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-custom btn-back">Назад</a>
+                <button type="submit" class="btn btn-primary btn-sm btn-custom">Изменить</button>
             </div>
         </div>
     </form>
+@endsection
+
+@section('js')
+    <script>
+        console.log('test');
+    </script>
 @endsection
