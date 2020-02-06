@@ -32,5 +32,7 @@
     @include('layouts.admin.footer')
 
     <script src="{{ mix('js/admin.js') }}"></script>
+
+    @yield('js')
 </body>
 </html>
