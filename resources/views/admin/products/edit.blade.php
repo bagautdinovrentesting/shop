@@ -10,7 +10,7 @@
         @method('PUT')
         <div class="mb-3">
             <label for="validationCustom01">Название</label>
-            <input type="text" class="form-control" id="validationCustom01" value="{{ $product->name }}" name="name" required>
+            <input type="text" class="form-control" id="validationCustom01" value="{{ $product->name }}" name="name">
             <div class="valid-feedback">@lang('checkout.valid_correct')</div>
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
@@ -21,8 +21,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="validationCustom01">Цена</label>
-            <input type="text" class="form-control" id="validationCustom01" value="{{ $product->price }}" name="price" required>
+            <label for="validationCustom02">Цена</label>
+            <input type="text" class="form-control" id="validationCustom02" value="{{ $product->price }}" name="price" required>
             <div class="valid-feedback">@lang('checkout.valid_correct')</div>
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
@@ -30,7 +30,7 @@
         <div class="form-group">
             <label>Статус</label>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input form-control" id="customControlValidation1" name="status" @if($product->status) checked @endif>
+                <input type="checkbox" class="custom-control-input form-control" id="customControlValidation1" name="status" value="1" @if($product->status) checked @endif>
                 <label class="custom-control-label" for="customControlValidation1">Активный</label>
                 <div class="invalid-feedback">Example invalid feedback text</div>
             </div>
@@ -100,7 +100,7 @@
                 if (!imgContainer.find('.img-field').length)
                 {
                     $('<input type="file" name="' + imgContainer.data('prop') + '" class="img-field">').appendTo(imgContainer);
-                    $('<input type="hidden" name="update_' + imgContainer.data("prop") + '">').appendTo(imgContainer);
+                    $('<input type="hidden" name="delete_' + imgContainer.data("prop") + '" value="Y">').appendTo(imgContainer);
                 }
                 else
                 {
