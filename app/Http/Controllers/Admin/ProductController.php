@@ -77,7 +77,42 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->input());
+        $request->validate([
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
+            'section' => 'required'
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $data = $request->except(
+            '_token',
+            '_method',
+            'section',
+            'status',
+        );
+
+        if ($request->has('section'))
+        {
+            $section = Section::find($request->input('section'));
+
+            $product->section()->associate($section);
+            $product->save();
+        }
+        //dd($data);
+        if ($request->hasFile('preview_photo')) {
+            $data['preview_photo'] = $request->file('preview_photo')->store('products');
+        }
+
+        if ($request->hasFile('detail_photo')) {
+            $data['detail_photo'] = $request->file('detail_photo')->store('products');
+        }
+
+        $data['status'] = $request->has('status') ? $request->input('status') : 0;
+
+        $product->update($data);
+
+        return redirect()->route('admin.products.index')->with('message', 'Update successful');
     }
 
     /**
