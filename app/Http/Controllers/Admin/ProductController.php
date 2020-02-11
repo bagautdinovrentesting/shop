@@ -90,6 +90,8 @@ class ProductController extends Controller
             '_method',
             'section',
             'status',
+            'delete_detail_photo',
+            'delete_preview_photo'
         );
 
         if ($request->has('section'))
@@ -99,13 +101,13 @@ class ProductController extends Controller
             $product->section()->associate($section);
             $product->save();
         }
-        //dd($data);
+
         if ($request->hasFile('preview_photo')) {
-            $data['preview_photo'] = $request->file('preview_photo')->store('products');
+            $data['preview_photo'] = $request->file('preview_photo')->store('products', ['disk' => 'public']);
         }
 
         if ($request->hasFile('detail_photo')) {
-            $data['detail_photo'] = $request->file('detail_photo')->store('products');
+            $data['detail_photo'] = $request->file('detail_photo')->store('products', ['disk' => 'public']);
         }
 
         $data['status'] = $request->has('status') ? $request->input('status') : 0;

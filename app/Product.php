@@ -7,9 +7,7 @@ use Gloudemans\Shoppingcart\Contracts\Buyable;
 
 class Product extends Model implements Buyable
 {
-    protected $fillable = [
-        'name', 'description', 'status', 'price', 'section_id', 'user_id'
-    ];
+    protected $guarded = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -40,7 +40,7 @@
             <label>Раздел</label>
             <select class="custom-select" name="section" required>
                 @foreach($sections as $section)
-                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                    <option value="{{ $section->id }}" @if($section->id === $product->section->id) selected @endif>{{ $section->name }}</option>
                 @endforeach
             </select>
             <div class="invalid-feedback">Example invalid custom select feedback</div>
