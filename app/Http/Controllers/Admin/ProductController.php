@@ -114,7 +114,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('admin.products.index')->with('message', 'Update successful');
+        return redirect()->route('admin.products.index')->with('success', 'Товар успешно обновлен');
     }
 
     /**

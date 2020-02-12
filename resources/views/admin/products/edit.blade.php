@@ -1,10 +1,6 @@
-@extends('layouts.admin.app', ['title' => trans('admin.products')])
+@extends('layouts.admin.app', ['title' => 'Изменить товар'])
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Изменить товар</h1>
-    </div>
-    @include('layouts.errors')
     <form action="{{ route('admin.products.update', $product->id) }}" method="post" class="form needs-validation mb-4" enctype="multipart/form-data">
         @csrf
         @method('PUT')

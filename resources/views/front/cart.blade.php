@@ -1,9 +1,6 @@
 @extends('layouts.front.app', ['title' => 'Корзина'])
 
 @section('content')
-    @if(session()->has('success'))
-        <div class="alert alert-success" role="alert">{{ session()->get('success') }}</div>
-    @endif
     @if(!$cartItems->isEmpty())
         <table class="table table-striped">
             <thead>
