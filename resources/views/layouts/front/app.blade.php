@@ -23,10 +23,15 @@
     @include('layouts.front.header')
 
     @if( isset($showBanner) )
-        @include('components.banner')
+        @if ( isset($agent) && ($agent->isMobile()))
+            @include('components.mobile.banner')
+        @else
+            @include('components.banner')
+        @endif
     @endif
 
     <main class="container py-4">
+        @include('layouts.errors')
         @yield('content')
     </main>
 
