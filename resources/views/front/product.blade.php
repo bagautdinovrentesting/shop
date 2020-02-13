@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="product-detail">
-        <h1>{{ $product->name }}</h1>
-        <div class="product-main mt-4">
+        <div class="product-main">
             <div class="row">
                 <div class="col-md-7">
                     @if (!empty($product->detail_photo))

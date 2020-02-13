@@ -28,7 +28,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::all();
+
+        return view('admin.products.create', ['sections' => $sections]);
     }
 
     /**
@@ -39,18 +41,53 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
+            'section' => 'required'
+        ]);
+
+        $data = $this->getProductData($request);
+
+        if ($request->has('section'))
+        {
+            $section = Section::find($request->input('section'));
+            $section->products()->create($data);
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
     }
 
     /**
-     * Display the specified resource.
+     * Get product data from request for store and update methods
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
-    public function show($id)
+    public function getProductData(Request $request) : array
     {
-        //
+        $data = $request->except(
+            '_token',
+            '_method',
+            'section',
+            'status',
+            'delete_detail_photo',
+            'delete_preview_photo'
+        );
+
+        if ($request->hasFile('preview_photo')) {
+            $data['preview_photo'] = $request->file('preview_photo')->store('products', ['disk' => 'public']);
+        }
+
+        if ($request->hasFile('detail_photo')) {
+            $data['detail_photo'] = $request->file('detail_photo')->store('products', ['disk' => 'public']);
+        }
+
+        $data['status'] = $request->has('status') ? $request->input('status') : 0;
+
+        $data['user_id'] = $request->user()->id;
+
+        return $data;
     }
 
     /**
@@ -85,14 +122,9 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        $data = $request->except(
-            '_token',
-            '_method',
-            'section',
-            'status',
-            'delete_detail_photo',
-            'delete_preview_photo'
-        );
+        $data = $this->getProductData($request);
+
+        $product->update($data);
 
         if ($request->has('section'))
         {
@@ -101,18 +133,6 @@ class ProductController extends Controller
             $product->section()->associate($section);
             $product->save();
         }
-
-        if ($request->hasFile('preview_photo')) {
-            $data['preview_photo'] = $request->file('preview_photo')->store('products', ['disk' => 'public']);
-        }
-
-        if ($request->hasFile('detail_photo')) {
-            $data['detail_photo'] = $request->file('detail_photo')->store('products', ['disk' => 'public']);
-        }
-
-        $data['status'] = $request->has('status') ? $request->input('status') : 0;
-
-        $product->update($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно обновлен');
     }

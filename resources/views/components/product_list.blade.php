@@ -1,14 +1,16 @@
 @foreach($products as $product)
     <div class="col-md-3 mb-4">
         <div class="section-items__item">
-            <div class="item__image text-center">
-                <a href="{{ route('front.product.id', $product->id) }}">
-                    @if (!empty($product->preview_photo))
-                        <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}" class="img-fluid">
-                    @else
-                        <img src="https://placehold.it/263x300" alt="{{ $product->name }}" class="img-fluid">
-                    @endif
-                </a>
+            <div class="item__top text-center">
+                <div class="item__top-image">
+                    <a href="{{ route('front.product.id', $product->id) }}">
+                        @if (!empty($product->preview_photo))
+                            <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                        @else
+                            <img src="https://placehold.it/263x300" alt="{{ $product->name }}" class="img-fluid">
+                        @endif
+                    </a>
+                </div>
             </div>
             <div class="item__body">
                 <div class="item__body-title mb-3">
