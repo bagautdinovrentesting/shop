@@ -1,7 +1,7 @@
 @extends('layouts.front.app', ['title' => $section->name])
 
 @section('content')
-    <div class="section-items py-4">
+    <div class="section-items">
         <div class="row">
             @include('components.product_list')
         </div>

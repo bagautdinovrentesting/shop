@@ -8,7 +8,7 @@ return [
     'prop_address' => 'Адрес',
     'prop_email' => 'E-mail',
     'valid_correct' => 'Отлично!',
-    'valid_incorrect' => 'Ошибка!',
+    'valid_incorrect' => 'Заполните это поле!',
     'private_policy_empty' => 'Необходимо согласиться с политикой конфиденциальности',
     'private_policy_text' => 'Я согласен с политикой конфиденциальности и соглашением об обработке персональных данных',
     'submit_form' => 'Оформить заказ'

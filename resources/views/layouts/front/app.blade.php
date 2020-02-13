@@ -31,6 +31,9 @@
     @endif
 
     <main class="container py-4">
+        @if (!isset($mainPage))
+            <h1 class="mb-4">{{ $title }}</h1>
+        @endif
         @include('layouts.errors')
         @yield('content')
     </main>

@@ -2,9 +2,9 @@
 
 @section('toolbar')
     <div class="btn-toolbar mb-2 mb-md-0">
-        <button type="button" class="btn btn-sm btn-outline-secondary">
+        <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-outline-secondary">
             <i class="fas fa-plus"></i> Добавить товар
-        </button>
+        </a>
     </div>
 @endsection
 
@@ -25,14 +25,14 @@
                 @foreach($products as $product)
                     <tr>
                         <td class="product-img">
-                            @if (!empty($product->detail_photo))
-                                <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                            @if (!empty($product->preview_photo))
+                                <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}" class="img-fluid">
                             @else
-                                <img src="https://placehold.it/50x50" alt="{{ $product->name }}" class="img-fluid">
+                                <img src="https://placehold.it/70x70" alt="{{ $product->name }}" class="img-fluid">
                             @endif
                         </td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->description }}</td>
+                        <td>{{ mb_substr($product->description, 0, 175) }}</td>
                         <td>{{ $product->section->name }}</td>
                         <td class="text-center">
                             <span class="status">
