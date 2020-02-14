@@ -30,6 +30,8 @@ Route::namespace('Front')->group(function() {
     Route::get("checkout", 'CheckoutController@index')->name('checkout.index');
     Route::post("checkout", 'CheckoutController@store')->name('checkout.store');
 
+    Route::get("search", 'ProductController@search')->name('front.search');
+
     Route::resource("cart", 'CartController');
 
     Route::get("section/{section}", 'SectionController@show')->name('front.section.id');

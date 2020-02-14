@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
+use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable
 {
+    use Searchable;
+
     protected $guarded = [];
 
     /**
@@ -67,5 +70,15 @@ class Product extends Model implements Buyable
     public function getBuyableWeight($options = null)
     {
         return 1;
+    }
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        return array('id' => $array['id'], 'name' => $array['name'], 'description' => $array['description']);
     }
 }
