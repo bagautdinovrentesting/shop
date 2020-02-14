@@ -6,7 +6,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mr-3">
+                <form action="{{ route('front.search') }}" class="ml-auto mr-2 header-search">
+                    <div class="position-relative">
+                        <input class="header-search__query px-4 py-2" type="search" name="query" value="" placeholder="Поиск">
+                        <button type="submit" class="header-search__submit position-absolute">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <button type="submit" name="header_search_submit" class="sr-only">Search!</button>
+                </form>
+                <ul class="navbar-nav mr-3">
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
