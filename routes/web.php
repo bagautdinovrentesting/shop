@@ -35,5 +35,5 @@ Route::namespace('Front')->group(function() {
     Route::resource("cart", 'CartController');
 
     Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
-    Route::get("{product}", 'ProductController@show')->name('front.product.id');
+    Route::get("product/{product}", 'ProductController@show')->name('front.product.id');
 });
