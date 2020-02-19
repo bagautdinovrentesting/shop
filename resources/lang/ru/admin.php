@@ -8,4 +8,5 @@ return [
     'users' => 'Пользователи',
     'form_submit' => 'Отправить',
     'form_delete' => 'Удалить',
+    'sections' => 'Разделы'
 ];

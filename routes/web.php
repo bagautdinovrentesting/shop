@@ -18,7 +18,8 @@ Route::prefix('admin')->middleware('check.role')->as('admin.')->group(function()
         Route::get('/', 'HomeController@index')->name('dashboard');
 
         Route::resource('products', 'ProductController');
-        //Route::resource('sections', 'ProductController');
+        Route::resource('sections', 'SectionController');
+
         Route::resource('users', 'UserController');
         Route::get('orders', 'OrderController@index')->name('orders.index');
     });
@@ -33,6 +34,8 @@ Route::namespace('Front')->group(function() {
     Route::get("search", 'ProductController@search')->name('front.search');
 
     Route::resource("cart", 'CartController');
+
+    Route::get("catalog", 'CatalogController@index')->name('catalog.index');
 
     Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
     Route::get("product/{product}", 'ProductController@show')->name('front.product.id');
