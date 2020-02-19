@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-    protected $fillable = [
-        'name', 'description', 'status', 'parent_id', 'depth_level', 'user_id'
-    ];
+    protected $guarded = [];
 
     public function user()
     {
