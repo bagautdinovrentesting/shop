@@ -18,10 +18,10 @@
                                         <li class="name">
                                             <a href="{{ route('front.section.id', $section->id) }}"><span>{{ $section->name }}</span></a>
                                         </li>
-                                        <li class="sub"><a href="/catalog/avtoelektronika/gps_navigatory/">GPS-навигаторы&nbsp;<span>6</span></a></li>
-                                        <li class="sub"><a href="/catalog/avtoelektronika/videoregistratory/">Видеорегистраторы&nbsp;<span>5</span></a></li>
-                                        <li class="sub"><a href="/catalog/avtoelektronika/avtozvuk/">Автозвук&nbsp;<span>10</span></a></li>
-                                        <li class="sub"><a href="/catalog/avtoelektronika/radary_detektory/">Радары-детекторы&nbsp;<span>4</span></a></li>
+                                        <li class="sub"><a href="#">GPS-навигаторы&nbsp;<span>6</span></a></li>
+                                        <li class="sub"><a href="#">Видеорегистраторы&nbsp;<span>5</span></a></li>
+                                        <li class="sub"><a href="#">Автозвук&nbsp;<span>10</span></a></li>
+                                        <li class="sub"><a href="#">Радары-детекторы&nbsp;<span>4</span></a></li>
                                     </ul>
                                 </td>
                             </tr>
