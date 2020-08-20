@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="validationCustom02">@lang('checkout.prop_surname')</label>
-                        <input type="text" class="form-control" id="validationCustom02" value="" name="customer_surname">
+                        <input type="text" class="form-control no-validate" id="validationCustom02" value="" name="customer_surname">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="validationCustom03"> @lang('checkout.prop_phone')</label>

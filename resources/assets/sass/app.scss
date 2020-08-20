@@ -266,3 +266,10 @@ footer{
         }
     }
 }
+
+/* CHECKOUT PAGE */
+
+.was-validated .form-control.no-validate:valid{
+    background: #fff;
+    border: 1px solid #ced4da;
+}
