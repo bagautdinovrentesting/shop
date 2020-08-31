@@ -20,6 +20,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
+
     @include('layouts.front.header')
 
     @if( isset($showBanner) )
@@ -39,5 +40,7 @@
     </main>
 
     @include('layouts.front.footer')
+
+    @stack('js')
 </body>
 </html>

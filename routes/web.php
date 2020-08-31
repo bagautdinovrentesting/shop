@@ -10,10 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//use Illuminate\Http\Request;
+Auth::routes(['verify' => true]);
 
-Auth::routes();
-
-Route::prefix('admin')->middleware('check.role')->as('admin.')->group(function() {
+Route::prefix('admin')->middleware('dashboard')->as('admin.')->group(function() {
     Route::namespace('Admin')->group(function() {
         Route::get('/', 'HomeController@index')->name('dashboard');
 
@@ -22,6 +22,12 @@ Route::prefix('admin')->middleware('check.role')->as('admin.')->group(function()
 
         Route::resource('users', 'UserController');
         Route::get('orders', 'OrderController@index')->name('orders.index');
+    });
+});
+
+Route::domain('{city}.bourne.com')->group(function (){
+    Route::namespace('Front')->group(function() {
+        Route::get('math', 'MathController@calculate');
     });
 });
 
@@ -39,4 +45,6 @@ Route::namespace('Front')->group(function() {
 
     Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
     Route::get("product/{product}", 'ProductController@show')->name('front.product.id');
+    Route::get('math', 'MathController@calculate');
+    Route::get('diff', 'DiffMathController@calculate');
 });

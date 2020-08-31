@@ -33,13 +33,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Auth::user()->role === 'admin')
+                                @can ('dashboard')
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Админка</a>
-                                @endif
+                                @endcan
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="e.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item logout-item" href="#">
                                     @lang('login.logout')
                                 </a>
 

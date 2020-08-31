@@ -5,6 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Section;
 use App\Cart;
+use App\Http\Controllers\Front\MathController;
+use App\Http\Controllers\Front\DiffMathController;
+use App\Services\Contracts\MathHelper;
+use App\Services\SumMathHelper;
+use App\Services\DiffMathHelper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->when(MathController::class)
+            ->needs(MathHelper::class)
+            ->give(SumMathHelper::class);
+
+        $this->app->when(DiffMathController::class)
+            ->needs(MathHelper::class)
+            ->give(DiffMathHelper::class);
     }
 
     /**

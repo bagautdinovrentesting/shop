@@ -12,6 +12,7 @@
         "algolia/algoliasearch-client-php": "^2.2",
         "bumbummen99/shoppingcart": "^2.8",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^7.0",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.2",
         "laravel/scout": "^7.2",
