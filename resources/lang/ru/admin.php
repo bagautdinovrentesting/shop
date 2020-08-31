@@ -8,5 +8,6 @@ return [
     'users' => 'Пользователи',
     'form_submit' => 'Отправить',
     'form_delete' => 'Удалить',
-    'sections' => 'Разделы'
+    'sections' => 'Разделы',
+    'empty_products' => 'Вы еще не добавили ни один товар'
 ];

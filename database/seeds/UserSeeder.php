@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 
-class UsersSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
             'name' => 'Bourne',
             'email' => 'superbourne@mail.ru',
             'password' => bcrypt('laravelknopka'),
-            'role' => 'admin'
+            'role_id' => 1
         ]);
     }
 }

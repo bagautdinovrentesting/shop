@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Order;
 use App\Cart;
 use App\User;
 use App\Product;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Cart $cart)
     {
+        if ($cart->count() <= 0)
+            return redirect()->route('cart.index');
+
         return view('front.checkout');
     }
 
@@ -20,9 +22,10 @@ class CheckoutController extends Controller
     {
         $data = $request->validate([
             'customer_name' => 'required|max:255',
-            'customer_phone' => 'required',
+            'customer_phone' => 'required|regex:/(78)[0-9]{10}/',
             'customer_email' => 'required|email',
-            'customer_address' => 'required'
+            'customer_address' => 'required',
+            'privacy' => 'accepted'
         ]);
 
         $data['customer_surname'] = $request->input('customer_surname');

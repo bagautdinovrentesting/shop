@@ -4,19 +4,39 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Section;
+use App\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
+/**
+ * Class ProductController
+ * @package App\Http\Controllers\Admin
+ */
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        //$this->authorizeResource(Product::class, 'product');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
-        $products = Product::with('section')->get();
+        $user = Auth::user();
+
+        if ($user->role->slug === 'admin')
+            $products = Product::with('section')->get();
+        else
+            $products = User::find($user->id)->products;
+
 
         return view('admin.products.list', ['products' => $products]);
     }
@@ -24,7 +44,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -36,16 +56,13 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     *
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'section' => 'required'
-        ]);
+        $this->validateProduct($request);
 
         $data = $this->getProductData($request);
 
@@ -58,10 +75,28 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
     }
 
+
+    /**
+     * Validate product forms (create, update)
+     *
+     * @param Request $request
+     */
+    public function validateProduct(Request $request) : void
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
+            'section' => 'required',
+            'detail_photo' => 'image',
+            'preview_photo' => 'image'
+        ]);
+    }
+
     /**
      * Get product data from request for store and update methods
      *
      * @param Request $request
+     *
      * @return array
      */
     public function getProductData(Request $request) : array
@@ -100,6 +135,8 @@ class ProductController extends Controller
     {
         $product = Product::with('section')->findOrFail($id);
 
+        $this->authorize('update', $product);
+
         $sections = Section::all();
 
         return view('admin.products.edit', ['product' => $product, 'sections' => $sections]);
@@ -110,17 +147,15 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'section' => 'required'
-        ]);
-
         $product = Product::findOrFail($id);
+
+        $this->authorize('update', $product);
+
+        $this->validateProduct($request);
 
         $data = $this->getProductData($request);
 
@@ -141,11 +176,16 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
+        $product = Product::findOrFail($id);
+
+        $this->authorize('delete', $product);
+
         Product::destroy($id);
+
         request()->session()->flash('success', 'Товар успешно удален!');
 
         return redirect()->route('admin.products.index');

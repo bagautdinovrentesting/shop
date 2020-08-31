@@ -10,6 +10,8 @@ class Product extends Model implements Buyable
 {
     use Searchable;
 
+    protected $with = ['user'];
+
     protected $guarded = [];
 
     /**
