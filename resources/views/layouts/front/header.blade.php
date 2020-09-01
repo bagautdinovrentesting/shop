@@ -19,11 +19,11 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">@lang('login.login')</a>
+                            <a class="nav-link" href="{{ route('login') }}">@lang('auth.login')</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">@lang('login.register')</a>
+                                <a class="nav-link" href="{{ route('register') }}">@lang('auth.register')</a>
                             </li>
                         @endif
                     @else
@@ -38,7 +38,7 @@
                                 @endcan
 
                                 <a class="dropdown-item logout-item" href="#">
-                                    @lang('login.logout')
+                                    @lang('auth.logout')
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

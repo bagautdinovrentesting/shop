@@ -50,9 +50,8 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <div>
-                <a href="/">{{ __('errors.main_link') }}</a>
-            </div>
+            @yield('main_link')
+
             <div class="code">
                 @yield('code')
             </div>
