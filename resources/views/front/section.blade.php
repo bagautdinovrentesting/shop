@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="section-items">
-        <div class="row">
-            @include('components.product_list')
-        </div>
+        @include('components.product_list')
     </div>
     <div class="section-descr py-4">
         {{ $section->description }}

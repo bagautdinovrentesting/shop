@@ -10,7 +10,7 @@ class SectionController extends Controller
 {
     public function show(Section $section)
     {
-        $products = $section->products()->where('status', 1)->get();
+        $products = $section->products()->where('status', 1)->paginate(4);
 
         return view('front.section', ['section' => $section, 'products' => $products]);
     }
