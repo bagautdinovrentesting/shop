@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\DiffMathController;
 use App\Services\Contracts\MathHelper;
 use App\Services\SumMathHelper;
 use App\Services\DiffMathHelper;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /*DB::listen(function ($query) {
+            echo '<pre>';
+            var_dump(
+                $query->sql,
+                $query->bindings,
+                $query->time
+            );
+            echo '</pre>';
+        });*/
+
         view()->composer(['layouts.front.app'], function ($view) {
             $view->with('sections', Section::all());
             $view->with('cartCounts', $this->getCartCounts());

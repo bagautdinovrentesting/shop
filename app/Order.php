@@ -17,4 +17,9 @@ class Order extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+
+    public function orderStatus()
+    {
+        return $this->belongsTo('App\OrderStatus', 'status_id');
+    }
 }

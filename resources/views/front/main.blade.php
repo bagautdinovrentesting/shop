@@ -6,9 +6,7 @@
             <h3 class="mb-3">@lang('main.random_products_title')</h3>
         </div>
         <div class="random-products__content">
-            <div class="row">
-                @include('components.product_list')
-            </div>
+            @include('components.product_list')
         </div>
     </div>
 @endsection
