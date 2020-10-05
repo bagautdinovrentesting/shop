@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\ProductObserver;
+use App\Product;
 use Illuminate\Support\ServiceProvider;
 use App\Section;
 use App\Cart;
@@ -10,7 +12,6 @@ use App\Http\Controllers\Front\DiffMathController;
 use App\Services\Contracts\MathHelper;
 use App\Services\SumMathHelper;
 use App\Services\DiffMathHelper;
-use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,6 +47,8 @@ class AppServiceProvider extends ServiceProvider
             );
             echo '</pre>';
         });*/
+
+        Product::observe(ProductObserver::class);
 
         view()->composer(['layouts.front.app'], function ($view) {
             $view->with('sections', Section::all());

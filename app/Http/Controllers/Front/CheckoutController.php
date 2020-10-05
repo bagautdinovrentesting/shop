@@ -34,7 +34,7 @@ class CheckoutController extends Controller
         $data['customer_surname'] = $request->input('customer_surname');
         $data['total'] = floatval($cart->total(0, '.', ''));
 
-        $user = $request->user();
+        $user = $request->user() ?? User::where('email', $data['customer_email'])->first();
 
         if (!$user)
         {

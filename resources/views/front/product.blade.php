@@ -54,3 +54,13 @@
 
     </div>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function(){
+            $.post("/test/{{ $product->id }}", {"_token": "{{ csrf_token() }}"}, function(result){
+                $('#review').text(result.data.name);
+            }, 'json');
+        });
+    </script>
+@endpush
