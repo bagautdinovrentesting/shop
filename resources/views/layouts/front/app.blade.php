@@ -9,9 +9,6 @@
 
     <title>{{ $title ?? trans('main.title')}}</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -40,6 +37,8 @@
     </main>
 
     @include('layouts.front.footer')
+
+    <script src="{{ mix('js/app.js') }}"></script>
 
     @stack('js')
 </body>

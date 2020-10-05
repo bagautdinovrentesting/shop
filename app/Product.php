@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Events\ProductDeleted;
+use App\Events\ProductSaved;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Laravel\Scout\Searchable;
@@ -10,9 +13,13 @@ class Product extends Model implements Buyable
 {
     use Searchable;
 
-    protected $with = ['user'];
+    //protected $with = ['user'];
 
     protected $guarded = [];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -82,5 +89,10 @@ class Product extends Model implements Buyable
         $array = $this->toArray();
 
         return array('id' => $array['id'], 'name' => $array['name'], 'description' => $array['description']);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return (new Carbon($value))->format('d.m.Y H:i:s');
     }
 }

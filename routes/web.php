@@ -43,8 +43,12 @@ Route::namespace('Front')->group(function() {
 
     Route::get("catalog", 'CatalogController@index')->name('catalog.index');
 
-    Route::get("section/{section}", 'SectionController@show')->name('front.section.id');
-    Route::get("product/{product}", 'ProductController@show')->name('front.product.id');
+    Route::get('section/{section}', 'SectionController@show')->name('front.section.id');
+    Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
     Route::get('math', 'MathController@calculate');
     Route::get('diff', 'DiffMathController@calculate');
+
+    Route::post('test/{product}', function (\App\Product $product){
+        return new \App\Http\Resources\Product($product);
+    });
 });

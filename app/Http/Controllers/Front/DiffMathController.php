@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Services\Contracts\MathHelper;
+use App\User;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Product;
+use App\Order;
 
 class DiffMathController extends Controller
 {
@@ -19,7 +22,15 @@ class DiffMathController extends Controller
 
     public function calculate()
     {
-        $arProductsByUser = array();
+        $products = Product::all();
+
+        foreach ($products as $product)
+        {
+            var_dump($product->toJson(JSON_UNESCAPED_UNICODE));
+        }
+        //$products->toQuery()->update(['status' => 1]);
+
+        die();
 
         if (Cache::has('products_by_user'))
         {
@@ -27,12 +38,7 @@ class DiffMathController extends Controller
         }
         else
         {
-            $products = Product::all();
-
-            foreach ($products as $product)
-            {
-                $arProductsByUser[$product->user->name][] = $product->name;
-            }
+            $arProductsByUser = User::with('products')->get();
 
             Cache::put('products_by_user', json_encode($arProductsByUser), Carbon::now()->addHour());
         }
