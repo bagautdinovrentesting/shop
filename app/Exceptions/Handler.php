@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use function MongoDB\BSON\toJSON;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \InvalidArgumentException) {
+            return response()->json(['message' => $exception->getMessage()]);
+        }
+
         return parent::render($request, $exception);
     }
 }

@@ -273,3 +273,14 @@ footer{
     background: #fff;
     border: 1px solid #ced4da;
 }
+
+/* PAGINATION */
+
+.page-item.active .page-link {
+    background-color: $mainBackColorTheme;
+    border-color: $mainBackColorTheme;
+}
+
+.page-link{
+    color: $mainBackColorTheme;
+}

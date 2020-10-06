@@ -48,9 +48,9 @@
                         </li>
                     @endguest
                 </ul>
-                <a href="{{ route('cart.index') }}" class="cart-count">
+                <a href="{{ route('cart.index') }}" class="cart-count" id="cart-count">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count__number">{{ $cartCounts }}</span>
+                    @include('components.small_cart')
                 </a>
             </div>
         </div>

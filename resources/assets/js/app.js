@@ -6,7 +6,7 @@ $(document).ready(function() {
         $('#logout-form').submit();
     });
 
-    $(".carousel").swipe( {
+    $(".carousel-swipe").swipe( {
         swipeLeft: function() {
             $(this).carousel("next");
         },

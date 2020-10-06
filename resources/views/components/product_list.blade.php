@@ -23,11 +23,7 @@
                             <span class="ruble-currency"><i class="fa fa-ruble-sign" aria-hidden="true"></i></span>
                         </div>
                         <div class="item__buy">
-                            <form action="{{ route('cart.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product" value="{{ $product->id }}">
-                                <button class="btn btn-main-theme" type="submit">Купить</button>
-                            </form>
+                            <button class="btn btn-main-theme add-to-basket" type="submit" data-product="{{ $product->id }}">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -39,3 +35,26 @@
 @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
     {{ $products->links('components.pagination') }}
 @endif
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.add-to-basket', function(){
+                let data = {product: $(this).data('product'), _token: "{{ csrf_token() }}"};
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('cart.store') }}",
+                    data: data,
+                    dataType: 'json',
+                    success: function(result){
+                        if (result.message)
+                            console.log(result.message);
+                        else if (result.count)
+                            $('#cart-count .cart-count__number').html(result.count);
+                    },
+                });
+            });
+        });
+    </script>
+@endpush
