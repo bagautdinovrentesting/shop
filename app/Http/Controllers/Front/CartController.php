@@ -36,9 +36,10 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::findOrFail($request->input('product'));
+
         $this->cart->add($product, 1, []);
 
-        return redirect()->route('cart.index');
+        return response()->json(['count' => $this->cart->count()]);
     }
 
     /**

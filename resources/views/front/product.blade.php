@@ -21,11 +21,7 @@
                             </span>
                         </div>
                         <div class="product-detail__buy-action mt-3">
-                            <form action="{{ route('cart.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product" value="{{ $product->id }}">
-                                <button class="btn btn-main-theme btn-lg btn-block" type="submit">Купить</button>
-                            </form>
+                            <button class="btn btn-main-theme btn-lg btn-block add-to-basket" type="submit" data-product="{{ $product->id }}">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -57,10 +53,23 @@
 
 @push('js')
     <script>
-        $(document).ready(function(){
-            $.post("/test/{{ $product->id }}", {"_token": "{{ csrf_token() }}"}, function(result){
-                $('#review').text(result.data.name);
-            }, 'json');
+        $(document).ready(function() {
+            $(document).on('click', '.add-to-basket', function(){
+                let data = {product: $(this).data('product'), _token: "{{ csrf_token() }}"};
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('cart.store') }}",
+                    data: data,
+                    dataType: 'json',
+                    success: function(result){
+                        if (result.message)
+                            console.log(result.message);
+                        else if (result.count)
+                            $('#cart-count .cart-count__number').html(result.count);
+                    },
+                });
+            });
         });
     </script>
 @endpush
