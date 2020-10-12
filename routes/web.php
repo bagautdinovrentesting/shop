@@ -20,6 +20,12 @@ Route::prefix('admin')->middleware('dashboard')->as('admin.')->group(function() 
         Route::resource('products', 'ProductController');
         Route::resource('sections', 'SectionController');
 
+        Route::resource('group_properties', 'GroupPropertyController')->except([
+            'index', 'show'
+        ]);
+
+        Route::resource('properties', 'PropertyController');
+
         Route::resource('users', 'UserController');
         Route::get('orders', 'OrderController@index')->name('orders.index');
     });

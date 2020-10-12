@@ -95,4 +95,9 @@ class Product extends Model implements Buyable
     {
         return (new Carbon($value))->format('d.m.Y H:i:s');
     }
+
+    public function values()
+    {
+        return $this->belongsToMany('App\PropertyValue', 'property_value_product');
+    }
 }

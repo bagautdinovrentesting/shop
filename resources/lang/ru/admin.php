@@ -9,5 +9,6 @@ return [
     'form_submit' => 'Отправить',
     'form_delete' => 'Удалить',
     'sections' => 'Разделы',
-    'empty_products' => 'Вы еще не добавили ни один товар'
+    'empty_products' => 'Вы еще не добавили ни один товар',
+    'empty_properties' => 'Вы еще не добавили ни одно свойство'
 ];

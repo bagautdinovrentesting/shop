@@ -2,6 +2,24 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
+/* RESET */
+a, a:hover{
+    color: inherit;
+}
+
+.nav-link:hover, .nav-link:focus{
+
+}
+
+.btn-link:focus, .btn-link.focus{
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.btn-link:hover{
+    text-decoration: none;
+}
+
 /* GLOBAL */
 
 @media (min-width: 768px) {
@@ -43,6 +61,23 @@
     background-color: #777;
 }
 
+.card{
+    border: none;
+    border-radius: unset;
+    background-color: inherit;
+    color: inherit;
+}
+
+.dark-bg{
+    background-color: $darkBackground;
+    color: $darkColor;
+}
+
+.light-dark-bg{
+    background-color: $lightDarkBackground;
+    color: $lightDarkColor;
+}
+
 /* HEADER */
 
 .form-control-dark {
@@ -69,6 +104,10 @@
         padding-top: .5rem;
         overflow-x: hidden;
         overflow-y: auto;
+    }
+
+    span.icon i{
+        min-width: 23px;
     }
 }
 
@@ -120,4 +159,30 @@
     }
 }
 
+/* PROPERTY LIST */
 
+.table-responsive a{
+    color: #007bff;
+}
+
+.group-property-name{
+    font-weight: 700;
+    padding: 10px 0 10px 0.3rem;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* PROPERTY VALUES LIST */
+
+table.property-values td{
+    padding: 12px 10px;
+}
+
+table.property-values td .form-control{
+    max-height: 28px;
+    border-width: 2px;
+    font-size: 13px;
+}
+
+.table.property-values thead th:first-child{
+    padding-left: 10px;
+}

@@ -33,6 +33,9 @@
                     <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">@lang('product.desc_title')</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" id="properties-tab" data-toggle="tab" href="#properties" role="tab" aria-controls="properties" aria-selected="true">Характеристики</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">@lang('product.review_title')</a>
                 </li>
                 <li class="nav-item">
@@ -41,6 +44,21 @@
             </ul>
             <div class="tab-content py-4" id="product-info-content">
                 <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab"> {{ $product->description }}</div>
+                <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="properties-tab">
+                    <div class="col-6">
+                    @foreach($groups as $groupName => $group)
+                        <h4>{{ $groupName }}</h4>
+                        <table class="table table-sm table-striped">
+                            @foreach($group as $property)
+                                <tr>
+                                    <td>{{ $property['name'] }}</td>
+                                    <td>{{ $property['value'] }}</td>
+                                </tr>
+                        @endforeach
+                        </table>
+                    @endforeach
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
                 <div class="tab-pane fade embed-responsive embed-responsive-4by3" id="video" role="tabpanel" aria-labelledby="video-tab">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/3zgdxI7W_Q4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

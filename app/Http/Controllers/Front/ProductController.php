@@ -12,9 +12,19 @@ class ProductController extends Controller
      * @param Product $product
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return view('front.product', ['product' => $product]);
+        $product = Product::with('section', 'values', 'values.property', 'values.property.group')->findOrFail($id);
+
+        $groups = array();
+
+        foreach ($product->values as $value)
+        {
+            $arProperty = ['name' => $value->property->name, 'value' => $value->value];
+            $groups[$value->property->group->name][] = $arProperty;
+        }
+
+        return view('front.product', ['product' => $product, 'groups' => $groups]);
     }
 
     /**
