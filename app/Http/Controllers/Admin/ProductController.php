@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\GroupProperty;
 use App\Http\Controllers\Controller;
+use App\Property;
 use App\Section;
 use App\User;
 use Illuminate\Http\RedirectResponse;
@@ -75,7 +77,6 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно добавлен');
     }
 
-
     /**
      * Validate product forms (create, update)
      *
@@ -107,7 +108,8 @@ class ProductController extends Controller
             'section',
             'status',
             'delete_detail_photo',
-            'delete_preview_photo'
+            'delete_preview_photo',
+            'properties'
         );
 
         if ($request->hasFile('preview_photo')) {
@@ -131,15 +133,23 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|View
      */
+
     public function edit($id)
     {
-        $product = Product::with('section')->findOrFail($id);
+        $product = Product::with('section', 'values', 'values.property')->findOrFail($id);
 
         $this->authorize('update', $product);
 
         $sections = Section::all();
+        $groups = GroupProperty::with('properties', 'properties.values')->get();
+        $productProperties = array();
 
-        return view('admin.products.edit', ['product' => $product, 'sections' => $sections]);
+        foreach ($product->values as $value)
+        {
+            $productProperties[$value->property->id] = $value->id;
+        }
+
+        return view('admin.products.edit', ['product' => $product, 'sections' => $sections, 'groups' => $groups, 'productProperties' => $productProperties]);
     }
 
     /**
@@ -159,14 +169,22 @@ class ProductController extends Controller
 
         $data = $this->getProductData($request);
 
+        if ($request->has('section') && Section::find($request->input('section')))
+            $data['section_id'] = $request->input('section');
+
         $product->update($data);
 
-        if ($request->has('section'))
+        if ($request->has('properties'))
         {
-            $section = Section::find($request->input('section'));
+            $arValues = array();
 
-            $product->section()->associate($section);
-            $product->save();
+            foreach($request->properties as $valueId)
+            {
+                if (!empty($valueId))
+                    $arValues[] = $valueId;
+            }
+
+            $product->values()->sync($arValues);
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно обновлен');

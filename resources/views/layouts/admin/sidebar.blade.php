@@ -1,35 +1,103 @@
-<nav class="d-none d-md-block bg-light sidebar col-md-2">
-    <div class="sidebar-sticky">
+<nav class="d-none d-md-block dark-bg sidebar col-md-2">
+    <div class="sidebar-sticky pt-0">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('admin.dashboard') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    @lang('admin.dashboard') <span class="sr-only">(current)</span>
-                </a>
+                <div class="card dark-bg">
+                    <div class="card-header">
+                        <a href="{{ route('admin.dashboard') }}">
+                            <span class="icon"><i class="fas fa-house-user"></i></span>
+                            <span class="ml-1">@lang('admin.dashboard')</span>
+                        </a>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.products.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    @lang('admin.products')
-                </a>
+                <div class="accordion" id="productsAccordion">
+                    <div class="card dark-bg">
+                        <div class="card-header" id="headingProducts">
+                            <button class="btn btn-link p-0 text-white" type="button" data-toggle="collapse" data-target="#collapseProducts" aria-controls="collapseProducts">
+                                <span class="icon"><i class="far fa-file-powerpoint"></i></span>
+                                <span class="ml-1">@lang('admin.products')</span>
+                            </button>
+                        </div>
+
+                        <div id="collapseProducts" class="collapse light-dark-bg" aria-labelledby="headingProducts" data-parent="#productsAccordion">
+                            <div class="card-body">
+                                <a class="nav-link pl-2" href="{{ route('admin.products.index') }}">
+                                    <span class="icon"><i class="fas fa-list"></i></span>
+                                    <span>Список</span>
+                                </a>
+                                <a class="nav-link pl-2" href="{{ route('admin.properties.index') }}">
+                                    <span class="icon"><i class="fas fa-box-open"></i></span>
+                                    <span>Свойства</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.sections.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    @lang('admin.sections')
-                </a>
+                <div class="accordion" id="sectionsAccordion">
+                    <div class="card dark-bg">
+                        <div class="card-header" id="headingSections">
+                            <button class="btn btn-link p-0 text-white" type="button" data-toggle="collapse" data-target="#collapseSections" aria-controls="collapseSections">
+                                <span class="icon"><i class="fas fa-clone"></i></span>
+                                <span class="ml-1">@lang('admin.sections')</span>
+                            </button>
+                        </div>
+
+                        <div id="collapseSections" class="collapse light-dark-bg" aria-labelledby="headingSections" data-parent="#sectionsAccordion">
+                            <div class="card-body">
+                                <a class="nav-link pl-2" href="{{ route('admin.sections.index') }}">
+                                    <span class="icon"><i class="fas fa-list"></i></span>
+                                    <span>Список</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.orders.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                    @lang('admin.orders')
-                </a>
+                <div class="accordion" id="ordersAccordion">
+                    <div class="card dark-bg">
+                        <div class="card-header" id="headingOrders">
+                            <button class="btn btn-link p-0 text-white" type="button" data-toggle="collapse" data-target="#collapseOrders" aria-controls="collapseOrders">
+                                <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                <span class="ml-1">@lang('admin.orders')</span>
+                            </button>
+                        </div>
+
+                        <div id="collapseOrders" class="collapse light-dark-bg" aria-labelledby="headingOrders" data-parent="#ordersAccordion">
+                            <div class="card-body">
+                                <a class="nav-link pl-2" href="{{ route('admin.orders.index') }}">
+                                    <span class="icon"><i class="fas fa-list"></i></span>
+                                    <span>Список</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.users.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    @lang('admin.users')
-                </a>
+                <div class="accordion" id="usersAccordion">
+                    <div class="card dark-bg">
+                        <div class="card-header" id="headingUsers">
+                            <button class="btn btn-link p-0 text-white" type="button" data-toggle="collapse" data-target="#collapseUsers" aria-controls="collapseUsers">
+                                <span class="icon"><i class="fas fa-users"></i></span>
+                                <span class="ml-1">@lang('admin.users')</span>
+                            </button>
+                        </div>
+
+                        <div id="collapseUsers" class="collapse light-dark-bg" aria-labelledby="headingUsers" data-parent="#usersAccordion">
+                            <div class="card-body">
+                                <a class="nav-link pl-2" href="{{ route('admin.users.index') }}">
+                                    <span class="icon"><i class="fas fa-list"></i></span>
+                                    <span>Список</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

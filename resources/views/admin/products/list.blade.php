@@ -19,7 +19,7 @@
                     <th>Описание</th>
                     <th>Раздел</th>
                     <th class="text-center">Статус</th>
-                    <th class="text-center">Действия</th>
+                    <th class="text-center">Удалить</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,8 +32,18 @@
                                     <img src="https://placehold.it/70x70" alt="{{ $product->name }}" class="img-fluid">
                                 @endif
                             </td>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ mb_substr($product->description, 0, 175) }}</td>
+                            <td>
+                                @can('update', $product)
+                                    <a href="{{ route('admin.products.edit', $product->id) }}" class="edit-item mr-2">{{ $product->name }}</a>
+                                @elsecan
+                                    <span>{{ $product->name }}</span>
+                                @endcan
+                            </td>
+                            <td>
+                                @if (!empty($product->description))
+                                    {{ mb_substr($product->description, 0, 80) }}...
+                                @endif
+                            </td>
                             <td>{{ $product->section->name }}</td>
                             <td class="text-center">
                                 <span class="status">
@@ -46,9 +56,6 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group v-top">
-                                    @can('update', $product)
-                                        <a href="{{ route('admin.products.edit', $product->id) }}" class="edit-item mr-2"><i class="fas fa-edit"></i></a>
-                                    @endcan
                                     @can('delete', $product)
                                         <form action="{{ route('admin.products.destroy', $product->id) }}" method="post">
                                             @csrf
