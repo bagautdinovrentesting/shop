@@ -100,4 +100,9 @@ class Product extends Model implements Buyable
     {
         return $this->belongsToMany('App\PropertyValue', 'property_value_product');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
+    }
 }

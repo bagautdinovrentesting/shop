@@ -99,6 +99,27 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <div class="accordion" id="reviewsAccordion">
+                    <div class="card dark-bg">
+                        <div class="card-header" id="headingReviews">
+                            <button class="btn btn-link p-0 text-white" type="button" data-toggle="collapse" data-target="#collapseReviews" aria-controls="collapseReviews">
+                                <span class="icon"><i class="fas fa-registered"></i></span>
+                                <span class="ml-1">Отзывы</span>
+                            </button>
+                        </div>
+
+                        <div id="collapseReviews" class="collapse light-dark-bg" aria-labelledby="headingReviews" data-parent="#reviewsAccordion">
+                            <div class="card-body">
+                                <a class="nav-link pl-2" href="{{ route('admin.reviews.index') }}">
+                                    <span class="icon"><i class="fas fa-list"></i></span>
+                                    <span>Список</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

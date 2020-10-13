@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\ReviewStatus;
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -24,7 +25,13 @@ class ProductController extends Controller
             $groups[$value->property->group->name][] = $arProperty;
         }
 
-        return view('front.product', ['product' => $product, 'groups' => $groups]);
+        $reviews = $product->reviews()->with('user', 'status')->get();
+
+        $reviews = $reviews->filter(function ($value, $key) {
+            return $value->status->code === 'S';
+        });
+
+        return view('front.product', ['product' => $product, 'groups' => $groups, 'reviews' => $reviews]);
     }
 
     /**
