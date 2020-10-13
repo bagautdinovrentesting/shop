@@ -45,7 +45,7 @@
             <div class="tab-content py-4" id="product-info-content">
                 <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab"> {{ $product->description }}</div>
                 <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="properties-tab">
-                    <div class="col-6">
+                    <div class="col-md-6 col-12">
                     @foreach($groups as $groupName => $group)
                         <h4>{{ $groupName }}</h4>
                         <table class="table table-sm table-striped">
@@ -59,13 +59,48 @@
                     @endforeach
                     </div>
                 </div>
-                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
+                <div class="tab-pane fade review-list" id="review" role="tabpanel" aria-labelledby="review-tab">
+                    <div class="col-md-12 mb-4">
+                        @foreach($reviews as $review)
+                            <div class="review d-flex pb-4">
+                                <div class="review-title mb-2">
+                                    <span class="review-username mr-2">{{ $review->user->name }}</span>
+                                    <span class="review-date">{{ $review->updated_at->format('d.m.Y') }}</span>
+                                </div>
+                                <div class="review-rating mb-2">
+                                    @for($i = 1; $i < 6; $i++)
+                                            <i class="fas fa-star @if($i <= $review->rating)active @endif"></i>
+                                    @endfor
+                                </div>
+                                <div class="review-text">{{ $review->text }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="mb-4">Написать отзыв</h3>
+                        <form class="needs-validation add-review" novalidate>
+                            <input type="hidden" name="product" value="{{ $product->id }}">
+                            <div class="form-group col-md-6 p-0">
+                                <label for="formControlRange">Рейтинг</label>
+                                <input type="range" name="rating" class="form-control-range" min="1" max="5" id="formControlRange" onInput="$('#rating-val').html($(this).val())" value="5">
+                                <span id="rating-val">5</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="validationTextarea">Текст отзыва</label>
+                                <textarea class="form-control" name="text" id="validationTextarea" style="height: 150px" placeholder="Опишите общее впечатление: срок использования, критерии при выборе" required></textarea>
+                                <div class="invalid-feedback">
+                                    Необходимо указать текст отзыва.
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Отправить отзыв</button>
+                        </form>
+                    </div>
+                </div>
                 <div class="tab-pane fade embed-responsive embed-responsive-4by3" id="video" role="tabpanel" aria-labelledby="video-tab">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/3zgdxI7W_Q4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
@@ -87,6 +122,39 @@
                             $('#cart-count .cart-count__number').html(result.count);
                     },
                 });
+            });
+
+            $('form.add-review').submit(function( event ){
+                event.preventDefault();
+
+                if (this.checkValidity() === false)
+                {
+                    event.stopPropagation();
+                }
+                else
+                {
+                    let arrData = $(this).serializeArray(),
+                        form = $(this),
+                        data = {};
+
+                    $.map(arrData, function(n, i){
+                        data[n['name']] = n['value'];
+                    });
+
+                    data['_token'] = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('front.reviews.store') }}",
+                        data: data,
+                        dataType: 'json',
+                        success: function(result){
+                            form.html(result.message);
+                        },
+                    });
+                }
+
+                this.classList.add('was-validated');
             });
         });
     </script>

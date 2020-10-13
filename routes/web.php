@@ -24,6 +24,8 @@ Route::prefix('admin')->middleware('dashboard')->as('admin.')->group(function() 
             'index', 'show'
         ]);
 
+        Route::resource('reviews', 'ReviewController')->except(['show']);
+
         Route::resource('properties', 'PropertyController');
 
         Route::resource('users', 'UserController');
@@ -51,6 +53,8 @@ Route::namespace('Front')->group(function() {
 
     Route::get('section/{section}', 'SectionController@show')->name('front.section.id');
     Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
+    Route::post('reviews', 'ReviewController@store')->name('front.reviews.store');
+
     Route::get('math', 'MathController@calculate');
     Route::get('diff', 'DiffMathController@calculate');
 
