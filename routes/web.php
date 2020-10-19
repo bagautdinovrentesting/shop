@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//use Illuminate\Http\Request;
+
 Auth::routes(['verify' => true]);
 
 Route::prefix('admin')->middleware('dashboard')->as('admin.')->group(function() {
@@ -55,8 +55,10 @@ Route::namespace('Front')->group(function() {
     Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
     Route::post('reviews', 'ReviewController@store')->name('front.reviews.store');
 
-    Route::get('math', 'MathController@calculate');
-    Route::get('diff', 'DiffMathController@calculate');
+    //Route::get('math', 'MathController@calculate');
+    //Route::get('diff', 'DiffMathController@calculate');
+
+    Route::get('section/{section}/filter', 'SectionController@filter')->name('front.catalog.filter');
 
     Route::post('test/{product}', function (\App\Product $product){
         return new \App\Http\Resources\Product($product);

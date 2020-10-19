@@ -96,7 +96,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade embed-responsive embed-responsive-4by3" id="video" role="tabpanel" aria-labelledby="video-tab">
+                <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
 
                 </div>
             </div>

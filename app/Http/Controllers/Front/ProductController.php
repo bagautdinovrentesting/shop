@@ -19,7 +19,7 @@ class ProductController extends Controller
 
         $groups = array();
 
-        foreach ($product->values as $value)
+        foreach ($product->values->sortBy('property.sort')->sortBy('property.group.sort') as $value)
         {
             $arProperty = ['name' => $value->property->name, 'value' => $value->value];
             $groups[$value->property->group->name][] = $arProperty;
@@ -42,11 +42,11 @@ class ProductController extends Controller
     {
         if ($request->has('query'))
         {
-            $products = Product::search($request->input('query'))->paginate(4);
+            $products = Product::search($request->input('query'))->paginate(12);
         }
         else
         {
-            $products = Product::paginate(4);
+            abort(404);
         }
 
         return view('front.search', ['products' => $products]);

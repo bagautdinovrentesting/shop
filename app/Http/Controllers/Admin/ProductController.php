@@ -171,13 +171,15 @@ class ProductController extends Controller
         {
             $arValues = array();
 
-            foreach($request->properties as $valueId)
+            foreach($request->properties as $propertyId => $valueId)
             {
                 if (!empty($valueId))
-                    $arValues[] = $valueId;
+                    $arValues[str_random(5)] = ['property_value_id' => $valueId, 'property_id' => $propertyId];
             }
-
-            $product->values()->sync($arValues);
+            //dd($arValues);
+            $product->values()->detach();
+            $product->values()->attach($arValues);
+            //$product->values()->sync($arValues);
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Товар успешно обновлен');
