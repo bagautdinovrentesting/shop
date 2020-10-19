@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
             echo '</pre>';
         });*/
 
-        Product::observe(ProductObserver::class);
+        //Product::observe(ProductObserver::class);
 
         view()->composer(['layouts.front.app'], function ($view) {
             $view->with('sections', Section::all());

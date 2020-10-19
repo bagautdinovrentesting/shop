@@ -1,12 +1,38 @@
 @extends('layouts.front.app', ['title' => trans('main.main_title')])
 
 @section('content')
-    <div class="random-products">
-        <div class="random-products__header">
-            <h3 class="mb-3">@lang('main.random_products_title')</h3>
+    @foreach ($properties as $propertyIndex => $property)
+        <div class="random-products">
+            <div class="random-products__header">
+                <h2 class="mb-3">{{ $property->name }}</h2>
+            </div>
+                <div class="random-products__content">
+                    @include('components.products_slider')
+                </div>
         </div>
-        <div class="random-products__content">
-            @include('components.product_list')
-        </div>
-    </div>
+    @endforeach
 @endsection
+
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.add-to-basket', function(){
+                let data = {product: $(this).data('product'), _token: "{{ csrf_token() }}"};
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('cart.store') }}",
+                    data: data,
+                    dataType: 'json',
+                    success: function(result){
+                        if (result.message)
+                            console.log(result.message);
+                        else if (result.count)
+                            $('#cart-count .cart-count__number').html(result.count);
+                    },
+                });
+            });
+        });
+    </script>
+@endpush

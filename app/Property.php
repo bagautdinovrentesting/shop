@@ -27,4 +27,9 @@ class Property extends Model
     {
         return $this->hasMany('App\PropertyValue');
     }
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Product', 'property_value_product');
+    }
 }

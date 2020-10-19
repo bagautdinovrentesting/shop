@@ -1,6 +1,6 @@
 <div class="row">
     @foreach($products as $product)
-        <div class="col-md-3 mb-4 ">
+        <div class="col-md-3 mb-4 px-1">
             <div class="section-items__item">
                 <div class="item__top text-center">
                     <div class="item__top-image">
