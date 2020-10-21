@@ -25,7 +25,7 @@ class ProductController extends Controller
             $groups[$value->property->group->name][] = $arProperty;
         }
 
-        $reviews = $product->reviews()->with('user', 'status')->get();
+        $reviews = $product->reviews()->with('user', 'status')->get()->sortByDesc('updated_at');
 
         $reviews = $reviews->filter(function ($value, $key) {
             return $value->status->code === 'S';

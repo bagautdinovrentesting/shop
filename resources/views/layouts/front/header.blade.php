@@ -36,6 +36,10 @@
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Админка</a>
                                 @endcan
 
+                                <a class="dropdown-item" href="{{ route('front.personal.index') }}" >
+                                    Личный кабинет
+                                </a>
+
                                 <a class="dropdown-item logout-item" href="#">
                                     @lang('auth.logout')
                                 </a>
