@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form action="{{ route('front.search') }}" class="ml-auto mr-2 header-search">
+                <form action="{{ route('front.search') }}" class="ml-auto mr-3 header-search">
                     <div class="position-relative">
                         <input class="header-search__query px-4 py-2" type="search" name="query" value="" placeholder="Поиск">
                         <button type="submit" class="header-search__submit position-absolute">
@@ -16,7 +16,6 @@
                     <button type="submit" name="header_search_submit" class="sr-only">Search!</button>
                 </form>
                 <ul class="navbar-nav mr-3">
-                    <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">@lang('auth.login')</a>
@@ -28,11 +27,11 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                            <a id="userNavbarDropdown" class="nav-link" href="{{ route('front.personal.index') }}" role="button">
+                                <i class="fas fa-user"></i>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-right mt-0">
                                 @can ('dashboard')
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Админка</a>
                                 @endcan

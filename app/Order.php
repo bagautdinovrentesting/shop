@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -13,6 +14,11 @@ class Order extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function status()
+    {
+        return $this->belongsTo('App\OrderStatus', 'status_id');
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Product')->withTimestamps();
@@ -21,5 +27,10 @@ class Order extends Model
     public function orderStatus()
     {
         return $this->belongsTo('App\OrderStatus', 'status_id');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return (new Carbon($value))->format('d.m.Y');
     }
 }
