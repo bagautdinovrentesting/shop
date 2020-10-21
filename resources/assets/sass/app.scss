@@ -103,6 +103,15 @@ input[type="search"]::-webkit-search-results-decoration {
     }
 }
 
+header .navbar i.fas{
+    font-size: 20px;
+    color: $mainBackColorTheme;
+}
+
+header .nav-item.dropdown:hover .dropdown-menu-right{
+    display: block;
+}
+
 /* MAIN PAGE */
 
 .main-banner{
@@ -477,4 +486,43 @@ footer{
 
 .section-property__values label:first-child{
     margin-top: 0;
+}
+
+/* PERSONAL */
+
+.personal-menu__header{
+    background-color: $mainBackColorTheme;
+    color: #fff;
+}
+
+.personal-menu__name{
+    font-size: 20px;
+}
+
+.personal-menu__panel{
+    padding: 0;
+    margin: 0;
+}
+
+.personal-menu__panel li{
+    list-style: none;
+    display: block;
+    background-color: #f7f7f7;
+
+    a{
+        display: block;
+        padding: 1.6rem 3rem 1.6rem 1.5rem;
+    }
+
+    .panel-icon{
+        margin-right: .3rem;
+    }
+}
+
+.personal-menu__panel li:hover{
+    background-color: #fff;
+}
+
+.personal-menu__panel li + li {
+    border-top: 1px solid #ededed;
 }

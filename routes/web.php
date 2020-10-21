@@ -55,6 +55,14 @@ Route::namespace('Front')->group(function() {
     Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
     Route::post('reviews', 'ReviewController@store')->name('front.reviews.store');
 
+    Route::prefix('personal')->middleware('auth')->group(function() {
+        Route::get('', 'PersonalController@index')->name('front.personal.index');
+
+        Route::get('orders', 'PersonalController@orders')->name('front.personal.orders');
+        Route::get('reviews', 'PersonalController@reviews')->name('front.personal.reviews');
+    });
+
+
     //Route::get('math', 'MathController@calculate');
     //Route::get('diff', 'DiffMathController@calculate');
 
