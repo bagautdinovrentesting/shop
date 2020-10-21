@@ -5,12 +5,12 @@
 /* GLOBAL */
 
 body{
+    background: #ededed;
     a, a:hover{
         text-decoration: none;
         color: #000;
     }
 }
-
 
 .btn-main-theme{
     background-color: $mainBackColorTheme;
@@ -31,7 +31,7 @@ body{
 
 @media (min-width: 1200px){
     .container{
-        max-width: calc(1360px + 2*30px);
+        max-width: calc(1600px + 2*30px);
         padding: 0 30px;
     }
 }
@@ -112,6 +112,10 @@ header .nav-item.dropdown:hover .dropdown-menu-right{
     display: block;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #fff;
+}
+
 /* MAIN PAGE */
 
 .main-banner{
@@ -135,6 +139,7 @@ header .nav-item.dropdown:hover .dropdown-menu-right{
 /* SECTION */
 
 .section-items__item{
+    background: #fff;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
@@ -161,6 +166,11 @@ header .nav-item.dropdown:hover .dropdown-menu-right{
 }
 
 /* PRODUCT */
+
+.product-detail__main{
+    background: #fff;
+    padding: 2rem;
+}
 
 .product-detail__buy{
     border: 4px $mainBackColorTheme solid;
@@ -197,6 +207,15 @@ i.fas.fa-star.active{
 
 .review-list .review-date{
     color: #555;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+    color: #000;
+}
+
+.product-detail__info .tab-content{
+    background: #fff;
+    padding: 1.5rem 2rem;
 }
 
 /* FOOTER */
@@ -395,6 +414,12 @@ footer{
 }
 
 /* CAROUSEL */
+
+main .carousel .carousel-inner{
+    background: #fff;
+    padding: 0 1.5rem 1.5rem;
+}
+
 .carousel.slide.list-items{
     margin: 50px auto;
     padding: 0 70px;
@@ -490,6 +515,10 @@ footer{
 
 /* PERSONAL */
 
+.personal-menu{
+    padding: 0;
+}
+
 .personal-menu__header{
     background-color: $mainBackColorTheme;
     color: #fff;
@@ -525,4 +554,13 @@ footer{
 
 .personal-menu__panel li + li {
     border-top: 1px solid #ededed;
+}
+
+.personal-content{
+    background: #fff;
+    padding: 2rem;
+}
+
+.personal-content table th{
+    border: 0;
 }

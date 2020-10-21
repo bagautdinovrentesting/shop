@@ -22,7 +22,7 @@
                                     <td>
                                         <a href="{{ route('front.product.id', $review->product->id) }}" target="_blank">{{ $review->product->name }}</a>
                                     </td>
-                                    <td>{{ mb_substr($review->text, 0, 80) }}...</td>
+                                    <td>{{ mb_substr($review->text, 0, 60) }}...</td>
                                     <td>{{ $review->status->name }}</td>
                                     <td class="text-center">
                                         <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="post">

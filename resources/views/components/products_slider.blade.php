@@ -12,7 +12,7 @@
             <div class="carousel-item @if($chunkIndex === 0) active @endif">
                 <div class="row">
                     @foreach($chunk as $product)
-                        <div class="col-sm-3 text-center">
+                        <div class="col-sm-3 col-12 text-center">
                             <div class="thumb-wrapper">
                                 <div class="img-box">
                                     <a href="{{ route('front.product.id', $product) }}">

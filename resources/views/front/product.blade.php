@@ -2,32 +2,30 @@
 
 @section('content')
     <div class="product-detail">
-        <div class="product-main">
-            <div class="row">
-                <div class="col-md-7">
-                    @if (!empty($product->detail_photo))
-                        <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
-                    @else
-                        <img src="https://placehold.it/665x330" alt="{{ $product->name }}" class="img-fluid">
-                    @endif
-                </div>
-                <div class="col-md-5 mt-3">
-                    <div class="product-detail__buy p-4 text-center">
-                        <div class="product-detail__buy-price-block font-weight-bold">
-                            <span>@lang('product.price')</span>
-                            <span class="detail-price">
-                                {{ number_format($product->price, 0, '.', ' ') }}
-                                <span class="ruble-currency"><i class="fa fa-ruble-sign" aria-hidden="true"></i></span>
-                            </span>
-                        </div>
-                        <div class="product-detail__buy-action mt-3">
-                            <button class="btn btn-main-theme btn-lg btn-block add-to-basket" type="submit" data-product="{{ $product->id }}">Купить</button>
-                        </div>
+        <div class="product-detail__main row">
+            <div class="col-md-7">
+                @if (!empty($product->detail_photo))
+                    <img src="{{ Storage::url("$product->detail_photo") }}" alt="{{ $product->name }}" class="img-fluid">
+                @else
+                    <img src="https://placehold.it/665x330" alt="{{ $product->name }}" class="img-fluid">
+                @endif
+            </div>
+            <div class="col-md-5 mt-3">
+                <div class="product-detail__buy p-4 text-center">
+                    <div class="product-detail__buy-price-block font-weight-bold">
+                        <span>@lang('product.price')</span>
+                        <span class="detail-price">
+                            {{ number_format($product->price, 0, '.', ' ') }}
+                            <span class="ruble-currency"><i class="fa fa-ruble-sign" aria-hidden="true"></i></span>
+                        </span>
+                    </div>
+                    <div class="product-detail__buy-action mt-3">
+                        <button class="btn btn-main-theme btn-lg btn-block add-to-basket" type="submit" data-product="{{ $product->id }}">Купить</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="product-info mt-5">
+        <div class="product-detail__info mt-5">
             <ul class="nav nav-tabs" id="product-info" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true">@lang('product.desc_title')</a>
