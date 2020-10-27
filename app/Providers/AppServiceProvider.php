@@ -50,10 +50,38 @@ class AppServiceProvider extends ServiceProvider
 
         //Product::observe(ProductObserver::class);
 
-        view()->composer(['layouts.front.app'], function ($view) {
-            $view->with('sections', Section::all());
+        $dbSections = Section::where('depth_level', '<', '4')->get();
+        $arNestedSections = [];
+
+        foreach ($dbSections as $section)
+        {
+            $arNestedSections[$section['parent_id']][$section['id']] = $section->toArray();
+        }
+
+        view()->composer(['layouts.front.app'], function ($view) use ($arNestedSections){
+            $view->with('sections', $this->recursiveBuildTree($arNestedSections, ''));
             $view->with('cartCounts', $this->getCartCounts());
         });
+    }
+
+    public function recursiveBuildTree($arItems, $parentId)
+    {
+        $arSections = [];
+
+        if (is_array($arItems) && !empty($arItems[$parentId]))
+        {
+            foreach($arItems[$parentId] as $item)
+            {
+                $arSections[$item['id']] = $item;
+                $arSections[$item['id']]['children'] = $this->recursiveBuildTree($arItems, $item['id']);
+            }
+        }
+        else
+        {
+            return null;
+        }
+
+        return $arSections;
     }
 
     public function getCartCounts()
