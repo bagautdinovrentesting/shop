@@ -1,64 +1,53 @@
-@extends('layouts.admin.app', ['title' => 'Добавить товар'])
+@extends('layouts.admin.app', ['title' => 'Изменить раздел'])
 
 @section('content')
-    <form action="{{ route('admin.products.store') }}" method="post" class="form needs-validation mb-4" enctype="multipart/form-data" novalidate>
+    <form action="{{ route('admin.sections.store') }}" method="post" class="form needs-validation mb-4" enctype="multipart/form-data" novalidate>
         @csrf
+
         <div class="mb-3">
             <label for="validationCustom01">Название</label>
-            <input type="text" class="form-control" id="validationCustom01" value="" name="name" required>
+            <input type="text" class="form-control" id="validationCustom01" value="{{ old('name') }}" name="name" required>
             <div class="valid-feedback">@lang('checkout.valid_correct')</div>
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
 
         <div class="mb-3">
-            <label for="description">Описание</label>
-            <textarea class="form-control" id="description" name="description"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label for="validationCustom02">Цена</label>
-            <input type="text" class="form-control" id="validationCustom02" value="" name="price" required>
-            <div class="valid-feedback">@lang('checkout.valid_correct')</div>
-            <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
+            <label for="validationTextarea">Описание</label>
+            <textarea class="form-control" id="validationTextarea" name="description">{{ old('description') }}</textarea>
         </div>
 
         <div class="form-group">
             <label>Статус</label>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input form-control" id="status" name="status" value="1">
-                <label class="custom-control-label" for="status">Активный</label>
+                <input type="checkbox" class="custom-control-input form-control" id="customControlValidation1" name="status" value="1" checked>
+                <label class="custom-control-label" for="customControlValidation1">Активный</label>
+                <div class="invalid-feedback">Example invalid feedback text</div>
             </div>
         </div>
 
         <div class="form-group">
             <label>Раздел</label>
-            <select class="custom-select" name="section">
+            <select class="custom-select" name="parent_id">
+                <option value="">Верхний уровень</option>
                 @foreach($sections as $section)
-                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                    <option value="{{ $section->id }}" @if($section->id == old('parent-section')) selected @endif>{{ $section->name }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="form-row">
-            <div class="col-auto mr-4">
-                <label>Детальное изображение</label>
-                <div class="img-container my-2 text-center" data-prop="detail_photo">
-                    <span class="img-list-descr">(Drag&amp;Drop) <br> Перетащите картинку</span>
-                    <input type="file" name="detail_photo" class="img-field">
-                </div>
-            </div>
             <div class="col-auto">
                 <label>Изображение для анонса</label>
-                <div class="img-container my-2 text-center" data-prop="preview_photo">
+                <div class="img-container my-2 text-center" data-prop="photo">
                     <span class="img-list-descr">(Drag&amp;Drop) <br> Перетащите картинку</span>
-                    <input type="file" name="preview_photo" class="img-field">
+                    <input type="file" name="photo" class="img-field">
                 </div>
             </div>
         </div>
 
         <div class="box-footer mt-4">
             <div class="btn-group">
-                <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-custom btn-back">Назад</a>
+                <a href="{{ route('admin.sections.index') }}" class="btn btn-sm btn-custom btn-back">Назад</a>
                 <button type="submit" class="btn btn-primary btn-sm btn-custom">Добавить</button>
             </div>
         </div>

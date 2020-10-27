@@ -27,7 +27,9 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::all();
+
+        return view('admin.sections.create', ['sections' => $sections]);
     }
 
     /**
@@ -38,18 +40,29 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:2000|nullable',
+            'status' => 'boolean'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        if ($request->has('parent_id')) {
+            $section = Section::findOrFail($request->input('parent_id'));
+            $data['parent_id'] = $section->id;
+            $data['depth_level'] = ++$section->depth_level;
+        }
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('sections', ['disk' => 'public']);
+        }
+
+        $data['status'] = $request->has('status') ? (int)$request->input('status') : 0;
+
+        $user = $request->user();
+
+        $user->sections()->create($data);
+
+        return redirect()->route('admin.sections.index')->with('success', 'Раздел успешно создан');
     }
 
     /**

@@ -60,11 +60,7 @@
     </nav>
     <div class="catalog-menu py-2">
         <div class="container">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                @foreach($sections as $section)
-                    <a class="flex-sm-fill text-sm-center nav-link @if(request()->segment(2) == $section->id) active @endif" href="{{ route('front.section.id', $section->id) }}">{{ $section->name }}</a>
-                @endforeach
-            </nav>
+            @include('components.catalog_menu')
         </div>
     </div>
 </header>
