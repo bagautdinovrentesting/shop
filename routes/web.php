@@ -13,7 +13,7 @@
 
 Auth::routes(['verify' => true]);
 
-Route::prefix('admin')->middleware('dashboard')->as('admin.')->group(function() {
+Route::prefix('admin')->middleware('can:dashboard')->as('admin.')->group(function() {
     Route::namespace('Admin')->group(function() {
         Route::get('/', 'HomeController@index')->name('dashboard');
 

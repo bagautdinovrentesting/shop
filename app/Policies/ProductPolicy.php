@@ -10,9 +10,9 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user, $ability)
+    public function before($user)
     {
-        if ($user->role->slug === 'admin')
+        if ($user->role->level === 3)
             return true;
     }
 

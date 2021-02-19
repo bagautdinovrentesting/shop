@@ -2,9 +2,10 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use function MongoDB\BSON\toJSON;
 
 class Handler extends ExceptionHandler
 {
@@ -41,15 +42,20 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param \Throwable $exception
+     * @return Response
+     * @throws Throwable
      */
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof \InvalidArgumentException) {
-            return response()->json(['message' => $exception->getMessage()]);
+           // return response()->json(['message' => $exception->getMessage()]);
         }
+
+        /*if ($exception instanceof ModelNotFoundException) {
+            return response($exception->getMessage());
+        }*/
 
         return parent::render($request, $exception);
     }

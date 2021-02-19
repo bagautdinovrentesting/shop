@@ -22,13 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->when(MathController::class)
-            ->needs(MathHelper::class)
-            ->give(SumMathHelper::class);
-
-        $this->app->when(DiffMathController::class)
-            ->needs(MathHelper::class)
-            ->give(DiffMathHelper::class);
     }
 
     /**
@@ -48,17 +41,14 @@ class AppServiceProvider extends ServiceProvider
             echo '</pre>';
         });*/
 
-        //Product::observe(ProductObserver::class);
-
         $dbSections = Section::where('depth_level', '<', '4')->get();
         $arNestedSections = [];
 
-        foreach ($dbSections as $section)
-        {
+        foreach ($dbSections as $section) {
             $arNestedSections[$section['parent_id']][$section['id']] = $section->toArray();
         }
 
-        view()->composer(['layouts.front.app'], function ($view) use ($arNestedSections){
+        view()->composer(['layouts.front.app'], function ($view) use ($arNestedSections) {
             $view->with('sections', $this->recursiveBuildTree($arNestedSections, ''));
             $view->with('cartCounts', $this->getCartCounts());
         });
@@ -68,16 +58,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $arSections = [];
 
-        if (is_array($arItems) && !empty($arItems[$parentId]))
-        {
-            foreach($arItems[$parentId] as $item)
-            {
+        if (is_array($arItems) && !empty($arItems[$parentId])) {
+            foreach ($arItems[$parentId] as $item) {
                 $arSections[$item['id']] = $item;
                 $arSections[$item['id']]['children'] = $this->recursiveBuildTree($arItems, $item['id']);
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
 

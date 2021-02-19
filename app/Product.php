@@ -7,6 +7,7 @@ use App\Events\ProductSaved;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable
@@ -22,7 +23,7 @@ class Product extends Model implements Buyable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -30,7 +31,7 @@ class Product extends Model implements Buyable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function section()
     {
@@ -104,5 +105,16 @@ class Product extends Model implements Buyable
     public function reviews()
     {
         return $this->hasMany('App\Review');
+    }
+
+    public function getProperties()
+    {
+        $productProperties = [];
+
+        foreach ($this->values as $value) {
+            $productProperties[$value->property->id] = $value->id;
+        }
+
+        return $productProperties;
     }
 }

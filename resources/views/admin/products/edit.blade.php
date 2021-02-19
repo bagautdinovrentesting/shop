@@ -43,7 +43,7 @@
 
                     <div class="form-group">
                         <label>Раздел</label>
-                        <select class="custom-select" name="section" required>
+                        <select class="custom-select" name="section_id" required>
                             @foreach($sections as $section)
                                 <option value="{{ $section->id }}" @if($section->id === $product->section->id) selected @endif>{{ $section->name }}</option>
                             @endforeach
