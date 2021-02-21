@@ -4,116 +4,59 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\PropertyValue;
+use App\Services\Section\SectionService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Section;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SectionController extends Controller
 {
-    public function show(Section $section)
-    {
-        $this->setViewData($section, $products, $properties);
+    private $service;
 
-        return view('front.section', ['section' => $section, 'products' => $products, 'properties' => $properties, 'checked' => []]);
+    public function __construct(SectionService $service)
+    {
+        $this->service = $service;
     }
 
-    private function setViewData($section, &$products, &$properties)
+    public function show(Section $section, Request $request)
     {
-        $products = $section->products()->where('status', 1)->paginate(12);
+        $page = $request->has('page') ? $request->get('page') : 1;
+        $viewData = $this->service->getViewData($section, $page);
 
-        $propertyValues = PropertyValue::whereHas('products', function (Builder $query) use ($section) {
-            $query->where('section_id', $section->id)->where('status', 1);
-        })->with('property')->orderBy('sort')->get();
+        $viewData['checked'] = [];
 
-        $properties = array();
-
-        foreach ($propertyValues as $value)
-        {
-            if (empty($properties[$value->property->id]))
-                $properties[$value->property->id] = $value->property->toArray();
-
-            $properties[$value->property->id]['values'][] = $value;
-        }
+        return view('front.section', $viewData);
     }
 
     public function filter(Section $section, Request $request)
     {
-        $filterProperties = [];
+        $viewData = $filterProperties = [];
+        $filterValues = $filterProps = [];
 
-        foreach ($request->all() as $paramName => $paramValue)
-        {
-            if (Str::startsWith($paramName, 'p_'))
-            {
+        foreach ($request->all() as $paramName => $paramValue) {
+            if (Str::startsWith($paramName, 'p_')) {
                 $propertyId = Str::substr($paramName, 2);
                 $filterProperties[$propertyId] = explode(',', $paramValue);
+                $filterProps[] = $propertyId;
+                $filterValues = array_merge($filterValues, explode(',', $paramValue));
             }
         }
 
-        if (!empty($filterProperties))
-        {
-            $query = PropertyValue::with('property');
+        $viewData['checked'] = $filterProperties;
 
-            $query->whereHas('products', function (Builder $query) use ($section) {
-                $query->where('section_id', $section->id)->where('status', 1);
-            });
+        $page = $request->has('page') ? $request->get('page') : 1;
 
-            $query->where( function (Builder $query) use ($filterProperties) {
-                $query->whereHas('products', function (Builder $query) use ($filterProperties) {
-                    foreach ($filterProperties as $property)
-                    {
-                        $query->whereHas('values', function (Builder $query) use ($property) {
-                            $query->whereIn('property_values.id', $property);
-                        });
-                    }
-                });
-
-                foreach ($filterProperties as $propertyIndex => $property)
-                {
-                    $query->orWhereHas('property', function (Builder $query) use ($propertyIndex){
-                        $query->where('id',  $propertyIndex);
-                    });
-                }
-            });
-
-            $propertyValues = $query->orderBy('sort')->get();
-
-            $properties = array();
-
-            foreach ($propertyValues as $value)
-            {
-                if (empty($properties[$value->property->id]))
-                    $properties[$value->property->id] = $value->property->toArray();
-
-                $properties[$value->property->id]['values'][] = $value;
-            }
-
-            $properties = array_sort($properties, function($value)
-            {
-                return $value['sort'];
-            });
-
-            $queryProducts = $section->products()->where('status', 1);
-
-            $queryProducts->where(function (Builder $query) use ($filterProperties) {
-                foreach ($filterProperties as $property)
-                {
-                    $query->WhereHas('values', function (Builder $query) use ($property) {
-                        $query->whereIn('property_values.id', $property);
-                    });
-                }
-            });
-
-            $products = $queryProducts->paginate(12);
-        }
-        else
-        {
-            $this->setViewData($section, $products, $properties);
+        if (!empty($filterProperties)) {
+            $viewData = array_merge($viewData, $this->service->getViewDataByFilter($section, $filterProps, $filterValues, $page));
+            $viewData['products'] = $viewData['products']->appends($request->except('page', 'ajax'));
+        } else {
+            $viewData = array_merge($viewData, $this->service->getViewData($section, $page));
         }
 
-        if ($request->has('ajax'))
-            return view('front.section_content', ['section' => $section, 'products' => $products->appends($request->except('page', 'ajax')), 'properties' => $properties, 'checked' => $filterProperties]);
-        else
-            return view('front.section', ['section' => $section, 'products' => $products->appends($request->except('page')), 'properties' => $properties, 'checked' => $filterProperties]);
+        $viewName = $request->has('ajax') ? 'front.section_content' : 'front.section';
+
+        return view($viewName, $viewData);
     }
 }

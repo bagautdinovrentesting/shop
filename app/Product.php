@@ -2,19 +2,23 @@
 
 namespace App;
 
-use App\Events\ProductDeleted;
-use App\Events\ProductSaved;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
+
+/**
+ * @property float $price
+ * @property int $id
+ * @property string $name
+*/
 
 class Product extends Model implements Buyable
 {
     use Searchable;
-
-    //protected $with = ['user'];
 
     protected $guarded = [];
 
@@ -22,92 +26,59 @@ class Product extends Model implements Buyable
         'status' => 'boolean',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\User');
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function section()
+    public function section(): BelongsTo
     {
         return $this->belongsTo('App\Section');
     }
 
-    /**
-     * Get the identifier of the Buyable item.
-     *
-     * @param null $options
-     * @return int|string
-     */
     public function getBuyableIdentifier($options = null)
     {
         return $this->id;
     }
 
-    /**
-     * Get the description or title of the Buyable item.
-     *
-     * @param null $options
-     * @return string
-     */
-    public function getBuyableDescription($options = null)
+    public function getBuyableDescription($options = null): string
     {
         return $this->name;
     }
 
-    /**
-     * Get the price of the Buyable item.
-     *
-     * @param null $options
-     * @return float
-     */
-    public function getBuyablePrice($options = null)
+    public function getBuyablePrice($options = null): float
     {
         return $this->price;
     }
 
-    /**
-     * Get the weight of the Buyable item.
-     *
-     * @param null $options
-     * @return string
-     */
-    public function getBuyableWeight($options = null)
+    public function getBuyableWeight($options = null): int
     {
         return 1;
     }
 
-    /**
-     * @return array
-     */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         $array = $this->toArray();
 
         return array('id' => $array['id'], 'name' => $array['name'], 'description' => $array['description']);
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute(string $value): string
     {
         return (new Carbon($value))->format('d.m.Y H:i:s');
     }
 
-    public function values()
+    public function values(): BelongsToMany
     {
         return $this->belongsToMany('App\PropertyValue', 'property_value_product');
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany('App\Review');
     }
 
-    public function getProperties()
+    public function getProperties(): array
     {
         $productProperties = [];
 

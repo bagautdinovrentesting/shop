@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Cart;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -17,23 +19,13 @@ class CartController extends Controller
         $this->cart = $cart;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
+        Log::channel('cart')->info('Cart route');
         return view('front.cart', ['cartItems' => $this->cart->content(), 'total' => $this->cart->total()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $product = Product::findOrFail($request->input('product'));
 
@@ -42,25 +34,12 @@ class CartController extends Controller
         return response()->json(['count' => $this->cart->count()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $this->cart->remove($id);
         request()->session()->flash('success', __('cart.destroy_product_message'));

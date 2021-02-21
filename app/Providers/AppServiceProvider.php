@@ -12,6 +12,10 @@ use App\Http\Controllers\Front\DiffMathController;
 use App\Services\Contracts\MathHelper;
 use App\Services\SumMathHelper;
 use App\Services\DiffMathHelper;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +35,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        VarDumper::setHandler(function ($var) {
+            $cloner = new VarCloner();
+            $cloner->setMaxItems(-1);
+            $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
+
+            $dumper->dump($cloner->cloneVar($var));
+        });
         /*DB::listen(function ($query) {
             echo '<pre>';
             var_dump(

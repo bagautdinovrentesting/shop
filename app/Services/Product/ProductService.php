@@ -5,6 +5,7 @@ namespace App\Services\Product;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductService
@@ -52,7 +53,7 @@ class ProductService
     {
         if ($request->has('properties'))
         {
-            $arValues = array();
+            $arValues = [];
 
             foreach($request->properties as $propertyId => $valueId)
             {
@@ -62,6 +63,8 @@ class ProductService
 
             $product->values()->detach();
             $product->values()->attach($arValues);
+
+            Cache::tags("section_{$product->section->id}")->flush();
         }
     }
 }

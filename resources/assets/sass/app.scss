@@ -12,6 +12,10 @@ body{
     }
 }
 
+.btn:focus{
+    box-shadow: none;
+}
+
 .btn-main-theme{
     background-color: $mainBackColorTheme;
     color: #fff;
@@ -114,6 +118,19 @@ header .nav-item.dropdown:hover .dropdown-menu-right{
 
 .dropdown-item.active, .dropdown-item:active {
     background-color: #fff;
+}
+
+/* CATALOG MENU */
+
+.outer-nav-link{
+    position: relative;
+}
+
+.outer-nav-link:hover .dropdown-menu{
+    display: block;
+    position: absolute;
+    top: 35px;
+    left: 65px;
 }
 
 /* MAIN PAGE */

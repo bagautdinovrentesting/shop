@@ -1,12 +1,10 @@
 <nav class="nav nav-pills flex-column flex-sm-row">
     @foreach($sections as $section)
-        <div class="flex-sm-fill text-sm-center">
+        <div class="flex-sm-fill text-sm-center outer-nav-link">
             @if(!empty($section['children']))
-                <button type="button" class="btn dropdown-toggle" id="dropdownMenu_{{ $section['id'] }}" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" style="color: #cbbde2"
-                >
+                <a href="{{ route('front.section.id', $section['id']) }}" class="btn" id="dropdownMenu_{{ $section['id'] }}" style="color: #cbbde2">
                     {{ $section['name'] }}
-                </button>
+                </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu_{{ $section['id'] }}">
                     @foreach($section['children'] as $child)
                         <a class="dropdown-item" href="{{ route('front.section.id', $child['id']) }}">{{ $child['name'] }}</a>

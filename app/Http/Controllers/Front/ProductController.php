@@ -9,10 +9,6 @@ use App\Product;
 
 class ProductController extends Controller
 {
-    /**
-     * @param Product $product
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show($id)
     {
         $product = Product::with('section', 'values', 'values.property', 'values.property.group')->findOrFail($id);
@@ -34,10 +30,6 @@ class ProductController extends Controller
         return view('front.product', ['product' => $product, 'groups' => $groups, 'reviews' => $reviews]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
     public function search(Request $request)
     {
         if ($request->has('query'))

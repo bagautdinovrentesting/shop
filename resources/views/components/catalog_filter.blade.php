@@ -1,14 +1,14 @@
-@foreach($properties as $property)
+@foreach($properties as $propertyId => $property)
     <div class="section-property">
         <div class="section-property__name">
             <span>{{ $property['name'] }}</span>
         </div>
         <div class="section-property__values">
-            @foreach($property['values'] as $value)
+            @foreach($property['values'] as $valueId => $value)
                 <label>
-                    <input type="checkbox" name="properties[{{ $property['id'] }}]" value="{{ $value->id }}" data-property="{{ $property['id'] }}"
-                           @if(!empty($checked[$property['id']]) && (array_search($value->id, $checked[$property['id']]) !== false)) checked @endif>
-                    <span>{{ $value->value }}</span>
+                    <input type="checkbox" name="properties[{{ $propertyId }}]" value="{{ $valueId }}" data-property="{{ $propertyId }}"
+                           @if(!empty($checked[$propertyId]) && (array_search($valueId, $checked[$propertyId]) !== false)) checked @endif>
+                    <span>{{ $value }}</span>
                 </label>
             @endforeach
         </div>

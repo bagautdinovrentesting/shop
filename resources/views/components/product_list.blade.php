@@ -4,7 +4,7 @@
             <div class="section-items__item">
                 <div class="item__top text-center">
                     <div class="item__top-image">
-                        <a href="{{ route('front.product.id', $product) }}">
+                        <a href="{{ route('front.product.id', $product->id) }}">
                             @if (!empty($product->preview_photo))
                                 <img src="{{ Storage::url("$product->preview_photo") }}" alt="{{ $product->name }}" class="img-fluid">
                             @else
@@ -15,7 +15,7 @@
                 </div>
                 <div class="item__body">
                     <div class="item__body-title mb-3">
-                        <a href="{{ route('front.product.id', $product) }}">{{ $product->name }}</a>
+                        <a href="{{ route('front.product.id', $product->id) }}">{{ $product->name }}</a>
                     </div>
                     <div class="item__body-checkout d-flex justify-content-between align-items-center">
                         <div class="item__price font-weight-bold">

@@ -47,6 +47,12 @@ return [
             'level' => 'debug',
         ],
 
+        'cart' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/cart.log'),
+            'level' => 'debug',
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
