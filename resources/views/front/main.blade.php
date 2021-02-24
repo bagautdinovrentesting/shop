@@ -1,14 +1,17 @@
 @extends('layouts.front.app', ['title' => trans('main.main_title')])
 
 @section('content')
-    @foreach ($properties as $propertyIndex => $property)
+    @foreach ($properties as $propertyName => $products)
+        @php
+            $randStr = str_random(8)
+        @endphp
         <div class="random-products">
             <div class="random-products__header">
-                <h2 class="mb-3">{{ $property->name }}</h2>
+                <h2 class="mb-3">{{ $propertyName }}</h2>
             </div>
-                <div class="random-products__content">
-                    @include('components.products_slider')
-                </div>
+            <div class="random-products__content">
+                @include('components.products_slider')
+            </div>
         </div>
     @endforeach
 @endsection

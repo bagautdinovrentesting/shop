@@ -11,6 +11,9 @@
 |
 */
 
+use App\Property;
+use App\PropertyValue;
+
 Auth::routes(['verify' => true]);
 
 Route::prefix('admin')->middleware('can:dashboard')->as('admin.')->group(function() {
@@ -71,4 +74,15 @@ Route::namespace('Front')->group(function() {
     Route::post('test/{product}', function (\App\Product $product){
         return new \App\Http\Resources\Product($product);
     });
+});
+
+Route::get('testing', function(){
+
+    $properties = Property::with('values:id,property_id')->select(['id'])->get();
+    $randomProperties = $properties->random(rand(1,8));
+    $values = [];
+    foreach ($randomProperties as $property) {
+        $values[$property->values->random()->id] = ['property_id' => $property->id];
+    }
+    dd($values);
 });

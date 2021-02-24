@@ -11,7 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-    //require('jquery-touchswipe');
+    require('jquery-touchswipe');
 } catch (e) {}
 
 /**
@@ -22,7 +22,7 @@ try {
 
 
 
-//window.axios = require('axios');
+window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

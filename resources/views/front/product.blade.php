@@ -41,7 +41,7 @@
                 </li>
             </ul>
             <div class="tab-content py-4" id="product-info-content">
-                <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab"> {{ $product->description }}</div>
+                <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab"> {!! nl2br(e($product->description)) !!}</div>
                 <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="properties-tab">
                     <div class="col-md-6 col-12">
                     @foreach($groups as $groupName => $group)

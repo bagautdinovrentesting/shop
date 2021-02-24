@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\PropertyValue;
 use App\Services\Section\SectionService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Section;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SectionController extends Controller
@@ -33,14 +30,11 @@ class SectionController extends Controller
     public function filter(Section $section, Request $request)
     {
         $viewData = $filterProperties = [];
-        $filterValues = $filterProps = [];
 
         foreach ($request->all() as $paramName => $paramValue) {
             if (Str::startsWith($paramName, 'p_')) {
                 $propertyId = Str::substr($paramName, 2);
                 $filterProperties[$propertyId] = explode(',', $paramValue);
-                $filterProps[] = $propertyId;
-                $filterValues = array_merge($filterValues, explode(',', $paramValue));
             }
         }
 
@@ -49,7 +43,7 @@ class SectionController extends Controller
         $page = $request->has('page') ? $request->get('page') : 1;
 
         if (!empty($filterProperties)) {
-            $viewData = array_merge($viewData, $this->service->getViewDataByFilter($section, $filterProps, $filterValues, $page));
+            $viewData = array_merge($viewData, $this->service->getViewDataByFilter($section, $filterProperties, $page));
             $viewData['products'] = $viewData['products']->appends($request->except('page', 'ajax'));
         } else {
             $viewData = array_merge($viewData, $this->service->getViewData($section, $page));

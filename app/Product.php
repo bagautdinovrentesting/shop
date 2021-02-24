@@ -18,13 +18,15 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable
 {
-    use Searchable;
+    //use Searchable;
 
     protected $guarded = [];
 
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public const STATUS_ACTIVE = 1;
 
     public function user(): BelongsTo
     {

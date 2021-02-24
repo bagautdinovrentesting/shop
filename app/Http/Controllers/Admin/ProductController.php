@@ -30,7 +30,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         if ($user->role->slug === 'admin') {
-            $products = Product::with('section')->get();
+            $products = Product::with('section')->paginate(72);
         } else {
             $products = $user->products;
         }

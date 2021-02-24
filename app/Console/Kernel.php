@@ -26,15 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function(){
-            $orders = Order::all();
-
-            foreach ($orders as $order)
-            {
-                $order->status_id = OrderStatus::FINISH_STATUS_ID;
-                $order->save();
-            }
-        })->daily();
+        $schedule->command('order:finish')->daily();
     }
 
     /**

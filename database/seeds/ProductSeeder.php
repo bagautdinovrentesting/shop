@@ -1,5 +1,10 @@
 <?php
 
+use App\Property;
+use App\PropertyValue;
+use App\Section;
+use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Seeder;
 use App\Product;
 
@@ -12,52 +17,42 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
+        $users = User::select('id')->whereHas('role', function (Builder $query) {
+            $query->where('level', '>=', 2);
+        })->get();
+
+        $sections = Section::select('id')->where('status', 1)->get();
+
+        //$propertyValues = PropertyValue::select(['id', 'property_id'])->get();
+        $properties = Property::with('values:id,property_id')->select(['id'])->get();
+
+        factory(Product::class, 1000)->create([
+            'user_id' => $users->random()->id,
+            'section_id' => $sections->random()->id,
+        ])->each(function ($product) use ($properties) {
+
+            /*$randomValues = $propertyValues->random(rand(1, 8))
+                ->pluck('property_id', 'id')
+                ->map(function ($propertyId) {
+                    return ['property_id' => $propertyId];
+                });*/
+
+            $randomProperties = $properties->random(rand(1, 8));
+            $randomValues = [];
+
+            foreach ($randomProperties as $property) {
+                $randomValues[$property->values->random()->id] = ['property_id' => $property->id];
+            }
+
+            $product->values()->attach($randomValues);
+        });
+
+        /*Product::create([
             'name' => 'Acer Nitro 5 AN517-51-55RE',
             'description' => 'Ноутбук Acer Nitro 5 AN517-51-55RE с диагональю 17.3" – это игровое устройство.',
             'price' => 35000,
             'section_id' => 1,
             'user_id' => 1
-        ]);
-
-        Product::create([
-            'name' => 'Ноутбук HP EliteBook 735 G6',
-            'description' => 'Сверхтонкий корпус и превосходное изображение на ультраярком экране с узкими рамками обеспечивают комфортную работу HP EliteBook 735 G6 практически при любом освещении.',
-            'price' => 70299,
-            'section_id' => 1,
-            'user_id' => 1
-        ]);
-
-        Product::create([
-            'name' => 'Ноутбук HP Probook 440 G6',
-            'description' => 'Функциональный, тонкий и легкий ноутбук HP ProBook 440 обеспечивает высокую продуктивность работы как в офисе, так и за его пределами.',
-            'price' => 70499,
-            'section_id' => 1,
-            'user_id' => 1
-        ]);
-
-        Product::create([
-            'name' => 'Ноутбук HP Pavilion Gaming 15-bc522ur',
-            'description' => 'Создаете контент? Часто работаете в видеоредакторе? Любите игры? Ноутбук Pavilion разработан для этих и многих других целей.',
-            'price' => 70799,
-            'section_id' => 1,
-            'user_id' => 1
-        ]);
-
-        Product::create([
-            'name' => 'Ноутбук Dell Inspiron 7490-7025',
-            'description' => 'Этот ноутбук создан для тех, кто хочет получить надежное и производительное компьютерное устройство с наиболее востребованным функционалом.',
-            'price' => 70899,
-            'section_id' => 1,
-            'user_id' => 1
-        ]);
-
-        Product::create([
-            'name' => 'Ультрабук Dell Inspiron 5390-8349',
-            'description' => 'Тонкий и легкий 13-дюймовый ноутбук, обладающий массой особенностей, включая твердотельный накопитель PCIe и процессор Intel Core.',
-            'price' => 70999,
-            'section_id' => 1,
-            'user_id' => 1
-        ]);
+        ]);*/
     }
 }
