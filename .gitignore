@@ -17,3 +17,4 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 /storage/debugbar/
+worker-orders.log
