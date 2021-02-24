@@ -47,6 +47,16 @@ Route::namespace('Front')->group(function() {
 
     Route::get("checkout", 'CheckoutController@index')->name('checkout.index');
     Route::post("checkout", 'CheckoutController@store')->name('checkout.store');
+    Route::middleware('auth')->group(function(){
+
+
+        Route::prefix('personal')->group(function() {
+            Route::get('', 'PersonalController@index')->name('front.personal.index');
+            Route::get('orders', 'PersonalController@orders')->name('front.personal.orders');
+            Route::get('reviews', 'PersonalController@reviews')->name('front.personal.reviews');
+        });
+    });
+
 
     Route::get("search", 'ProductController@search')->name('front.search');
 
@@ -58,22 +68,9 @@ Route::namespace('Front')->group(function() {
     Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
     Route::post('reviews', 'ReviewController@store')->name('front.reviews.store');
 
-    Route::prefix('personal')->middleware('auth')->group(function() {
-        Route::get('', 'PersonalController@index')->name('front.personal.index');
 
-        Route::get('orders', 'PersonalController@orders')->name('front.personal.orders');
-        Route::get('reviews', 'PersonalController@reviews')->name('front.personal.reviews');
-    });
-
-
-    //Route::get('math', 'MathController@calculate');
-    //Route::get('diff', 'DiffMathController@calculate');
 
     Route::get('section/{section}/filter', 'SectionController@filter')->name('front.catalog.filter');
-
-    Route::post('test/{product}', function (\App\Product $product){
-        return new \App\Http\Resources\Product($product);
-    });
 });
 
 Route::get('testing', function(){

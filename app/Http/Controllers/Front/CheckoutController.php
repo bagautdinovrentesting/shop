@@ -3,37 +3,43 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderRequest;
+use App\Order;
+use App\OrderStatus;
+use App\PayHandler;
+use App\Services\Payment\PayHandlerResolver;
 use Illuminate\Http\Request;
 use App\Cart;
 use App\User;
 use App\Product;
 use App\Events\NewOrder;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
+    private PayHandlerResolver $resolver;
+
+    public function __construct(PayHandlerResolver $resolver)
+    {
+        $this->resolver = $resolver;
+    }
+
     public function index(Cart $cart)
     {
         if ($cart->count() <= 0)
             return redirect()->route('cart.index');
 
-        return view('front.checkout');
+        $payHandlers = PayHandler::active()->get();
+
+        return view('front.checkout', compact('payHandlers'));
     }
 
-    public function store(Request $request, Cart $cart)
+    public function store(OrderRequest $request, Cart $cart)
     {
-        $data = $request->validate([
-            'customer_name' => 'required|max:255',
-            'customer_phone' => 'required|regex:/[78][0-9]{10}/',
-            'customer_email' => 'required|email',
-            'customer_address' => 'required',
-            'privacy' => 'accepted'
-        ]);
+        $data = collect($request->validated())->except(['privacy', 'pay_handler']);
 
-        unset($data['privacy']);
-
-        $data['customer_surname'] = $request->input('customer_surname');
-        $data['total'] = floatval($cart->total(0, '.', ''));
-        $data['status_id'] = 1;
+        $data->put('total', floatval($cart->total(0, '.', '')));
+        $data->put('status_id', OrderStatus::getCreateStatusId());
 
         $user = $request->user() ?? User::where('email', $data['customer_email'])->first();
 
@@ -49,12 +55,24 @@ class CheckoutController extends Controller
         $productIDs = array_column($cart->content()->all(), 'id');
         $products = Product::findOrFail($productIDs);
 
-        $order = $user->orders()->create($data);
-        $order->products()->saveMany($products);
+        $order = DB::transaction(function () use ($user, $data, $products) {
+            $order = $user->orders()->create($data->toArray());
+            $order->products()->saveMany($products);
+
+            return $order;
+        });
+
+        $cart->destroy();
+
+        $payHandlerId = $request->get('pay_handler');
+
+        $dbPayHandler = PayHandler::findOrFail($payHandlerId);
+        $payHandler = $this->resolver->resolve($dbPayHandler);
+        $payHandler->initiatePay($order);
 
         NewOrder::dispatch($order);
 
-        $cart->destroy();
+
 
         request()->session()->flash('success', 'Заказ успешно оформлен!');
 

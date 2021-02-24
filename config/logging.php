@@ -47,9 +47,9 @@ return [
             'level' => 'debug',
         ],
 
-        'cart' => [
+        'payment' => [
             'driver' => 'single',
-            'path' => storage_path('logs/cart.log'),
+            'path' => storage_path('logs/payment.log'),
             'level' => 'debug',
         ],
 

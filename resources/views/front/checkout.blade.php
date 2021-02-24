@@ -38,6 +38,30 @@
                         <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
                     </div>
                 </div>
+
+                @if(!empty($payHandlers))
+                    <div class="form-row mb-3">
+                        <div class="col-md-6">
+                            <label>Способ оплаты</label>
+                            <div class="row">
+                                @foreach($payHandlers as $handler)
+                                    <div class="pay-handler-b__block col-md-4 col-offset-2 text-center">
+                                        <input id="PAY_HANDLER_{{ $handler->id }}" name="pay_handler" type="checkbox" value="{{ $handler->id }}">
+                                        <label for="PAY_HANDLER_{{ $handler->id }}">
+                                            <span class="pay-handler-b__pic">
+                                                <img src="{{ Storage::url("$handler->preview_photo") }}">
+                                            </span>
+                                            <span class="pay-handler-b__name">
+                                                {{ $handler->name }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="form-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="invalidCheck" name="privacy" {{ old('privacy') ? 'checked' : '' }} required>

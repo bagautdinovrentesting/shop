@@ -419,6 +419,24 @@ footer{
     border: 1px solid #ced4da;
 }
 
+.pay-handler-b__block label{
+    max-width: 200px;
+}
+
+.pay-handler-b__block input{
+    display: none;
+}
+
+.pay-handler-b__block input:checked+label{
+    border: 1px solid rgba(235,43,48,.3);
+    box-shadow: 0 0 0 1px #eb2b30;
+}
+
+.pay-handler-b__pic img{
+    max-width: 100%;
+    height: auto;
+}
+
 /* PAGINATION */
 
 .page-item.active .page-link {

@@ -5,6 +5,11 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property float $total
+*/
+
 class Order extends Model
 {
     protected $guarded = [];
@@ -32,5 +37,10 @@ class Order extends Model
     public function getCreatedAtAttribute($value)
     {
         return (new Carbon($value))->format('d.m.Y');
+    }
+
+    public function setPayedStatus()
+    {
+        $this->update(['status' => OrderStatus::getPayedStatusId()]);
     }
 }

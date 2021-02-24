@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Services\Payment\Exceptions\PaymentException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -37,6 +39,10 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
         parent::report($exception);
+
+        if ($exception instanceof PaymentException) {
+            Log::channel('payment')->error($exception->getMessage());
+        }
     }
 
     /**
@@ -49,8 +55,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \InvalidArgumentException) {
-           // return response()->json(['message' => $exception->getMessage()]);
+        if ($exception instanceof PaymentException) {
+           return \response('Payment unavailable, Please try again to pay your order later', 503);
         }
 
         /*if ($exception instanceof ModelNotFoundException) {
