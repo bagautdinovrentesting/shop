@@ -1,2 +1,2 @@
 Simple shop
-Laravel + Mysql + Redis (cache, session)
+Laravel + Mysql + Redis (cache, session) + ElasticSearch (facet search, full text search)
