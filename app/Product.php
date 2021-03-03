@@ -14,19 +14,24 @@ use Laravel\Scout\Searchable;
  * @property float $price
  * @property int $id
  * @property string $name
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property string $description
+ * @property boolean $status
+ * @property int $user_id
+ * @property int $section_id
+ * @property PropertyValue[] $values
 */
 
 class Product extends Model implements Buyable
 {
-    //use Searchable;
-
     protected $guarded = [];
 
     protected $casts = [
         'status' => 'boolean',
     ];
 
-    public const STATUS_ACTIVE = 1;
+    public const STATUS_ACTIVE = true;
 
     public function user(): BelongsTo
     {
@@ -58,18 +63,6 @@ class Product extends Model implements Buyable
         return 1;
     }
 
-    public function toSearchableArray(): array
-    {
-        $array = $this->toArray();
-
-        return array('id' => $array['id'], 'name' => $array['name'], 'description' => $array['description']);
-    }
-
-    public function getUpdatedAtAttribute(string $value): string
-    {
-        return (new Carbon($value))->format('d.m.Y H:i:s');
-    }
-
     public function values(): BelongsToMany
     {
         return $this->belongsToMany('App\PropertyValue', 'property_value_product');
@@ -89,5 +82,10 @@ class Product extends Model implements Buyable
         }
 
         return $productProperties;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 }

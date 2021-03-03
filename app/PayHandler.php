@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PayHandler extends Model
 {
-    public const ACTIVE_STATUS = 1;
+    public const STATUS_ACTIVE = 1;
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE_STATUS);
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 }

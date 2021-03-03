@@ -2,28 +2,34 @@
 
 namespace App\Observers;
 
-use App\Mail\ProductSaved;
 use App\Product;
-use App\User;
-use Illuminate\Support\Facades\Mail;
+use App\Services\Elastic\ProductIndexer;
 
 class ProductObserver
 {
-    /**
-     * @param Product $product
-     */
-    public function updated(Product $product)
-    {
-        $admin = User::findOrFail(1);
+    private ProductIndexer $productIndexer;
 
-        Mail::to($admin)->send(new ProductSaved($product));
+    public function __construct(ProductIndexer $productIndexer)
+    {
+        $this->productIndexer = $productIndexer;
     }
 
-    /**
-     * @param User $user
-     */
+    public function created(Product $product)
+    {
+        $this->productIndexer->index($product);
+    }
+
+    public function updated(Product $product)
+    {
+        $this->productIndexer->index($product);
+
+        /*$admin = User::findOrFail(1);
+
+        Mail::to($admin)->send(new ProductSaved($product));*/
+    }
+
     public function deleted(Product $product)
     {
-
+        $this->productIndexer->remove($product);
     }
 }

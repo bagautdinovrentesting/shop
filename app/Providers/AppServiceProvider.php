@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
+
 use App\Observers\ProductObserver;
 use App\Product;
+use App\Services\Elastic\ProductSearch;
+use App\Services\Section\Contracts\SectionService;
+use App\Services\Section\ElasticService;
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Support\ServiceProvider;
 use App\Section;
 use App\Cart;
-use App\Http\Controllers\Front\MathController;
-use App\Http\Controllers\Front\DiffMathController;
-use App\Services\Contracts\MathHelper;
-use App\Services\SumMathHelper;
-use App\Services\DiffMathHelper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
@@ -26,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(Client::class, function ($app) {
+            return ClientBuilder::create()
+                ->setHosts($app['config']->get('services.search.hosts'))
+                ->build();
+        });
+
+        $this->app->bind(SectionService::class, function ($app) {
+            return new ElasticService($app->make(ProductSearch::class));
+            //return new RelationService();
+        });
     }
 
     /**
@@ -42,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
 
             $dumper->dump($cloner->cloneVar($var));
         });
+
         /*DB::listen(function ($query) {
             echo '<pre>';
             var_dump(

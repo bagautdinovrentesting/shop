@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductSearchRequest;
 use App\ReviewStatus;
+use App\Services\Elastic\ProductSearch;
 use Illuminate\Http\Request;
 use App\Product;
 
 class ProductController extends Controller
 {
+    private ProductSearch $searchService;
+
+    public function __construct(ProductSearch $searchService)
+    {
+        $this->searchService = $searchService;
+    }
+
     public function show($id)
     {
         $product = Product::with('section', 'values', 'values.property', 'values.property.group')->findOrFail($id);
@@ -30,16 +39,9 @@ class ProductController extends Controller
         return view('front.product', ['product' => $product, 'groups' => $groups, 'reviews' => $reviews]);
     }
 
-    public function search(Request $request)
+    public function search(ProductSearchRequest $request)
     {
-        if ($request->has('query'))
-        {
-            $products = Product::search($request->input('query'))->paginate(12);
-        }
-        else
-        {
-            abort(404);
-        }
+        $products = $this->searchService->search($request, 12);
 
         return view('front.search', ['products' => $products]);
     }

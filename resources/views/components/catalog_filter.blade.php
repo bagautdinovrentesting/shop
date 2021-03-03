@@ -8,7 +8,10 @@
                 <label>
                     <input type="checkbox" name="properties[{{ $propertyId }}]" value="{{ $valueId }}" data-property="{{ $propertyId }}"
                            @if(!empty($checked[$propertyId]) && (array_search($valueId, $checked[$propertyId]) !== false)) checked @endif>
-                    <span>{{ $value }}</span>
+                    <span>{{ $value['value'] }}</span>
+                    @if(!empty($value['count']))
+                        <span class="ml-2">({{ $value['count'] }})</span>
+                    @endif
                 </label>
             @endforeach
         </div>

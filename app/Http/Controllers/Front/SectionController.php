@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Services\Section\SectionService;
+use App\Services\Section\Contracts\SectionService;
+use App\Services\Section\RelationService;
 use Illuminate\Http\Request;
 use App\Section;
 use Illuminate\Support\Str;
 
 class SectionController extends Controller
 {
-    private $service;
+    private SectionService $service;
+
+    private const PER_PAGE = 24;
 
     public function __construct(SectionService $service)
     {
@@ -20,34 +23,17 @@ class SectionController extends Controller
     public function show(Section $section, Request $request)
     {
         $page = $request->has('page') ? $request->get('page') : 1;
-        $viewData = $this->service->getViewData($section, $page);
 
-        $viewData['checked'] = [];
+        $viewData = $this->service->getViewData($section, self::PER_PAGE, $page);
 
         return view('front.section', $viewData);
     }
 
     public function filter(Section $section, Request $request)
     {
-        $viewData = $filterProperties = [];
-
-        foreach ($request->all() as $paramName => $paramValue) {
-            if (Str::startsWith($paramName, 'p_')) {
-                $propertyId = Str::substr($paramName, 2);
-                $filterProperties[$propertyId] = explode(',', $paramValue);
-            }
-        }
-
-        $viewData['checked'] = $filterProperties;
-
         $page = $request->has('page') ? $request->get('page') : 1;
 
-        if (!empty($filterProperties)) {
-            $viewData = array_merge($viewData, $this->service->getViewDataByFilter($section, $filterProperties, $page));
-            $viewData['products'] = $viewData['products']->appends($request->except('page', 'ajax'));
-        } else {
-            $viewData = array_merge($viewData, $this->service->getViewData($section, $page));
-        }
+        $viewData = $this->service->getViewDataWithFilter($section, self::PER_PAGE, $page, $request);
 
         $viewName = $request->has('ajax') ? 'front.section_content' : 'front.section';
 

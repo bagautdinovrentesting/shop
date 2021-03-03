@@ -11,6 +11,7 @@
         "php": "^7.4",
         "algolia/algoliasearch-client-php": "^2.2",
         "bumbummen99/shoppingcart": "^2.8",
+        "elasticsearch/elasticsearch": "^7.11",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.0",
         "jenssegers/agent": "^2.6",

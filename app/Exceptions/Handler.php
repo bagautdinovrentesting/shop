@@ -6,6 +6,7 @@ use App\Services\Payment\Exceptions\PaymentException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -59,9 +60,9 @@ class Handler extends ExceptionHandler
            return \response('Payment unavailable, Please try again to pay your order later', 503);
         }
 
-        /*if ($exception instanceof ModelNotFoundException) {
-            return response($exception->getMessage());
-        }*/
+        if ($exception instanceof ValidationException) {
+            //return response($exception->getMessage());
+        }
 
         return parent::render($request, $exception);
     }

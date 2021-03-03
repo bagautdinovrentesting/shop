@@ -4,5 +4,4 @@
     <div class="section-items">
         @include('components.product_list')
     </div>
-    {{ $products->links('components.pagination') }}
 @endsection

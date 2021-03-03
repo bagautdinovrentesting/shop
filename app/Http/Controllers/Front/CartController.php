@@ -19,9 +19,8 @@ class CartController extends Controller
         $this->cart = $cart;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        Log::channel('cart')->info('Cart route');
         return view('front.cart', ['cartItems' => $this->cart->content(), 'total' => $this->cart->total()]);
     }
 

@@ -36,19 +36,13 @@ Route::prefix('admin')->middleware('can:dashboard')->as('admin.')->group(functio
     });
 });
 
-Route::domain('{city}.bourne.com')->group(function (){
-    Route::namespace('Front')->group(function() {
-        Route::get('math', 'MathController@calculate');
-    });
-});
-
 Route::namespace('Front')->group(function() {
     Route::get('/', 'HomeController@index')->name('home');
 
     Route::get("checkout", 'CheckoutController@index')->name('checkout.index');
     Route::post("checkout", 'CheckoutController@store')->name('checkout.store');
-    Route::middleware('auth')->group(function(){
 
+    Route::middleware('auth')->group(function(){
 
         Route::prefix('personal')->group(function() {
             Route::get('', 'PersonalController@index')->name('front.personal.index');
@@ -56,7 +50,6 @@ Route::namespace('Front')->group(function() {
             Route::get('reviews', 'PersonalController@reviews')->name('front.personal.reviews');
         });
     });
-
 
     Route::get("search", 'ProductController@search')->name('front.search');
 
@@ -68,18 +61,27 @@ Route::namespace('Front')->group(function() {
     Route::get('product/{product}', 'ProductController@show')->name('front.product.id');
     Route::post('reviews', 'ReviewController@store')->name('front.reviews.store');
 
-
-
     Route::get('section/{section}/filter', 'SectionController@filter')->name('front.catalog.filter');
 });
 
-Route::get('testing', function(){
+Route::get('testing', function(\Elasticsearch\Client $client){
+    $product = \App\Product::active()->get();
 
-    $properties = Property::with('values:id,property_id')->select(['id'])->get();
-    $randomProperties = $properties->random(rand(1,8));
-    $values = [];
-    foreach ($randomProperties as $property) {
-        $values[$property->values->random()->id] = ['property_id' => $property->id];
-    }
-    dd($values);
+
+
+    dd($product);
+
+    $response = $client->search([
+        'index' => 'products',
+        'body' => [
+           // '_source' => ['id'],
+            'query' => [
+                'term' => [
+                    'status' => true
+                ]
+            ],
+        ]
+    ]);
+
+    dd($response);
 });
