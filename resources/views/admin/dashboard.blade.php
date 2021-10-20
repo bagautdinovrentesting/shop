@@ -1,5 +1,5 @@
 @extends('layouts.admin.app', ['title' => 'Админка'])
 
 @section('content')
-    <h1>Dashboard</h1>
+    <h3>Dashboard</h3>
 @endsection
