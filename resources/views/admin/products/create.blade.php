@@ -5,19 +5,19 @@
         @csrf
         <div class="mb-3">
             <label for="validationCustom01">Название</label>
-            <input type="text" class="form-control" id="validationCustom01" value="" name="name" required>
+            <input type="text" class="form-control" id="validationCustom01" value="{{ old('name') }}" name="name" required>
             <div class="valid-feedback">@lang('checkout.valid_correct')</div>
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
 
         <div class="mb-3">
             <label for="description">Описание</label>
-            <textarea class="form-control" id="description" name="description"></textarea>
+            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
         </div>
 
         <div class="mb-3">
             <label for="validationCustom02">Цена</label>
-            <input type="text" class="form-control" id="validationCustom02" value="" name="price" required>
+            <input type="text" class="form-control" id="validationCustom02" value="{{ old('price') }}" name="price" required>
             <div class="valid-feedback">@lang('checkout.valid_correct')</div>
             <div class="invalid-feedback">@lang('checkout.valid_incorrect')</div>
         </div>
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label>Раздел</label>
-            <select class="custom-select" name="section">
+            <select class="custom-select" name="section_id">
                 @foreach($sections as $section)
                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                 @endforeach

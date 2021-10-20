@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="section-items">
-        <div class="row">
-            @include('components.product_list')
-        </div>
+        @include('components.product_list')
     </div>
-    {{ $products->links('components.pagination') }}
 @endsection

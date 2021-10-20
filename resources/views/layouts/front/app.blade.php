@@ -9,9 +9,6 @@
 
     <title>{{ $title ?? trans('main.title')}}</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -20,6 +17,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
+
     @include('layouts.front.header')
 
     @if( isset($showBanner) )
@@ -39,5 +37,9 @@
     </main>
 
     @include('layouts.front.footer')
+
+    <script src="{{ mix('js/app.js') }}"></script>
+
+    @stack('js')
 </body>
 </html>

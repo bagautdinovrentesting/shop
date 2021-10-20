@@ -50,6 +50,8 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+            @yield('main_link')
+
             <div class="code">
                 @yield('code')
             </div>

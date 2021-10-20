@@ -3,7 +3,10 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="@lang('admin.search')" aria-label="@lang('admin.search')">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="{{ route('logout') }}">@lang('login.logout')</a>
+            <a class="nav-link logout-item" href="#">@lang('auth.logout')</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </li>
     </ul>
 </nav>
